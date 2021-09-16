@@ -64,7 +64,7 @@ if ENV['BARK_PUSH'] in os.environ:
 
 title = time.strftime("%m-%d", time.localtime()) + '易班打卡:\n'
 result = name + Yiban(mobile, password, data, extend).main()
-msg = title + result
+msg = title + "："+ result
 
 if (bark != ''):
   requests.post(url=f'https://api.day.app/{bark}/{msg}')
