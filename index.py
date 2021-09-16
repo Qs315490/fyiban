@@ -25,6 +25,7 @@ mobile = ''
 password = ''
 data = ''
 extend = ''
+bark = ''
 
 try:
   with open('./config.json', 'rb') as f:
@@ -65,7 +66,7 @@ title = time.strftime("%m-%d", time.localtime()) + '易班打卡:\n'
 result = name + Yiban(mobile, password, data, extend).main()
 msg = title + result
 
-if (bark is not None):
+if (bark != ''):
   requests.post(url=f'https://api.day.app/{bark}/{msg}')
 
 print(msg)
