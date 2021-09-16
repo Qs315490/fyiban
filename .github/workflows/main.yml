@@ -20,7 +20,9 @@ jobs:
 
     - name: Run Yiban
       env:
+        YIBAN_NAME: ${{ secrets.YIBAN_NAME }}
         YIBAN_MOBILE: ${{ secrets.YIBAN_MOBILE }}
         YIBAN_PASSWORD: ${{ secrets.YIBAN_PASSWORD }}
+        BARK_PUSH: ${{ BARK_PUSH }}
       run: |
         python index.py
