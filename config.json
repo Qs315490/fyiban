@@ -1,0 +1,50 @@
+{
+  "user": [{
+          "name": "",
+          "mobile": "",
+          "password": ""
+      }
+  ],
+
+  "data": {
+      "9843754e97aad058523524bdb8991bcd": "否",
+      "72fe9c2c81a48fd0968edbbb3f2c1c42": "36.5",
+      "769bbfbfb026629f1ddb0294a9c0d257": "广东省广州市越秀区永胜上沙1号 东湖御苑",
+      "90b5b83950ae456fefebb0f751406e2d": [{
+        "name": "5178739B-F0FC-42A6-B898-A713BD3D8A50.png",
+        "type": "image/png",
+        "size": 634480,
+        "status": "done",
+        "percent": 100,
+        "fileName": "workflow/202108/30/28debe0191a2e9d1cfe29eec1a0ea348.png",
+        "path": "workflow/202108/30/28debe0191a2e9d1cfe29eec1a0ea348.png"
+    }],
+    "0242914b8746275c5073ccdb156f9d1d": [{
+        "name": "980CDA0C-CF47-434E-8B8D-A68D3347E9C5.png",
+        "type": "image/png",
+        "size": 581084,
+        "status": "done",
+        "percent": 100,
+        "fileName": "workflow/202108/30/5726b003bf54ef41986346c7cf5334c2.png",
+        "path": "workflow/202108/30/5726b003bf54ef41986346c7cf5334c2.png"
+    }]
+  },
+
+  "extend": {
+      "TaskId": "",
+      "title": "任务信息",
+      "content": [{
+              "label": "任务名称",
+              "value": "每日学生疫情上报"
+          },
+          {
+              "label": "发布机构",
+              "value": "学生处"
+          },
+          {
+              "label": "发布人",
+              "value": "邸灿"
+          }
+      ]
+  }
+}
