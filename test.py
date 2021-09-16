@@ -5,7 +5,5 @@ print(mobile)
 print(password)
 
 if "YIBAN_MOBILE" in os.environ:
-    print("已获取并使用Env环境 MOBILE")
-    
-if mobile is None:
-  print('Error')
+    print(type(mobile))
+    print(type(password))
