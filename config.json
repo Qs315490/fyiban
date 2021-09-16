@@ -1,9 +1,15 @@
 {
-  "user": [{
-          "name": "",
-          "mobile": "",
-          "password": ""
-      }
+  "user": [
+    {
+      "name": "",
+      "mobile": "",
+      "password": ""
+    },
+    {
+      "name": "",
+      "mobile": "",
+      "password": ""
+    }
   ],
 
   "data": {
