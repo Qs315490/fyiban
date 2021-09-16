@@ -12,15 +12,15 @@ env = {
 
 if env['YIBAN_MOBILE'] in os.environ:
   mobile = os.getenv('YIBAN_MOBILE')
-  print("已从环境变量中获取Mobile")
+  print("已从环境变量中获取mobile")
 
 if env['YIBAN_PASSWORD'] in os.environ:
   password = os.getenv('YIBAN_PASSWORD')
-  print("已从环境变量中获取Password")
+  print("已从环境变量中获取password")
 
 if env['BARK_PUSH'] in os.environ:
   bark = os.getenv('BARK_PUSH')
-  print("已从环境变量中获取Bark")
+  print("已从环境变量中获取bark")
 
 
 reqHeaders = {"Origin": "https://c.uyiban.com", "User-Agent": "Yiban-Pro", "AppVersion": "5.0"}
@@ -29,13 +29,8 @@ def getToken():
   """
   登录函数
   """
-  try:
-      url = f'https://mobile.yiban.cn/api/v4/passport/login?mobile={mobile}&password={password}&ct=2&identify=1'
-      resp = requests.post(url,headers=reqHeaders).json()
-      access_token = resp['data']['access_token']
-      name = resp['data']['user']['name']
-      print(access_token)
-  except KeyError:
-      raise 'Error: getToken'
+  url = f'https://mobile.yiban.cn/api/v4/passport/login?mobile={mobile}&password={password}&ct=2&identify=1'
+  resp = requests.post(url,headers=reqHeaders).json()
+  print(resp)
 
 getToken()
