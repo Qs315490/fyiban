@@ -1,36 +1,41 @@
-import time
-import json
 import requests
-from yiban import Yiban
+import os
 
-def main(data=None, extend=None):
-    msg = time.strftime("%m-%d", time.localtime()) + '易班打卡:\n'
-    with open('./config.json', 'rb') as r:
-        f = json.load(r)
-        passport = f['yiban']
-        try:
-            for i in passport:
-                mobile = i['mobile']
-                password = i['password']
-                load = Yiban(mobile, password).main()
-                msg = msg + load + '\n'
-        except:
-            msg = '打卡程序异常'
-        finally:
-            print(msg)
-            key = '5HsZbJ6diroqy65hprHyNS'
-            if key != '':
-               send(key, msg)
-                
+"""
+获取环境变量
+"""
+env = {
+  'YIBAN_MOBILE': 'YIBAN_MOBILE',  # 账号
+  'YIBAN_PASSWORD': 'YIBAN_PASSWORD',  # 密码
+  'BARK_PUSH': 'BARK_PUSH'  # Bark
+}
 
-def send(key, msg):
-    """
-    key: 密钥
-    msg: 推送内容
-    推送服务:
-    bark
-    """
-    requests.get(f'https://api.day.app/{key}/{msg}')
-    
-if __name__=='__main__':
-    main()
+if env['YIBAN_MOBILE'] in os.environ:
+  mobile = os.getenv('YIBAN_MOBILE')
+  print("已从环境变量中获取Mobile")
+
+if env['YIBAN_PASSWORD'] in os.environ:
+  password = os.getenv('YIBAN_PASSWORD')
+  print("已从环境变量中获取Password")
+
+if env['BARK_PUSH'] in os.environ:
+  bark = os.getenv('BARK_PUSH')
+  print("已从环境变量中获取Bark")
+
+
+reqHeaders = {"Origin": "https://c.uyiban.com", "User-Agent": "Yiban-Pro", "AppVersion": "5.0"}
+
+def getToken():
+  """
+  登录函数
+  """
+  try:
+      url = f'https://mobile.yiban.cn/api/v4/passport/login?mobile={mobile}&password={password}&ct=2&identify=1'
+      resp = requests.post(url,headers=reqHeaders).json()
+      access_token = resp['data']['access_token']
+      name = resp['data']['user']['name']
+      print(access_token)
+  except KeyError:
+      raise 'Error: getToken'
+
+getToken()

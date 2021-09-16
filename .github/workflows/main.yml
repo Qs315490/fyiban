@@ -21,4 +21,4 @@ jobs:
         YIBAN_MOBILE: ${{ secrets.YIBAN_MOBILE }}
         YIBAN_PASSWORD: ${{ secrets.YIBAN_PASSWORD }}
       run: |
-        python test.py
+        python index.py
