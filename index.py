@@ -45,7 +45,7 @@ def main():
       print("正在从配置文件启动打卡")
       result = name + Yiban(mobile, password, data, extend).main()
       msg = msg + '\n' + result
-    return title + msg
+      return title + msg
 
   if name == '':
     if ENV['YIBAN_NAME'] in os.environ:
