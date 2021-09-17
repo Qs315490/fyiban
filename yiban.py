@@ -27,9 +27,12 @@ class Yiban():
     self.access_token = ''
 
   def main(self):
-    self.getToken()
-    self.getAuth()
-    return self.doSubmit()
+    try:
+      self.getToken()
+      self.getAuth()
+      return self.doSubmit()
+    except KeyError:
+      return "Error"
 
   def req(self, url, method='get',data=None, cookies=None, allow_redirects=True):
     """
@@ -55,12 +58,10 @@ class Yiban():
     url = 'http://f.yiban.cn/iapp/index?act=iapp7463'  # 校本化iapp7463
     resp = self.req(url, cookies={'loginToken': self.access_token}, allow_redirects=False)
     verify = re.findall(r"verify_request=(.*?)&", resp.headers.get("Location"))[0]  # 正则verify
-    #print(verify)
 
     """Auth"""
     url = f'https://api.uyiban.com/base/c/auth/yiban?verifyRequest={verify}&CSRF={CSRF}'
     resp = self.req(url, cookies=COOKIE).json()
-    #print(resp)
 
   def doSubmit(self):
     """
@@ -68,27 +69,30 @@ class Yiban():
     """
     url = f'https://api.uyiban.com/officeTask/client/index/uncompletedList?StartTime={getStartTime()}&EndTime={getEndTime()}&CSRF={CSRF}'
     resp = self.req(url, cookies=COOKIE).json()
-    
-    try:
-        TaskId = resp['data'][0]['TaskId']
-        url = f'https://api.uyiban.com/officeTask/client/index/detail&TaskId={TaskId}&CSRF={CSRF}'
-        WFId = self.req(url, cookies=COOKIE).json()['data']['WFId']
+    if resp['data'] == []:
+      return "无未打卡信息"
+    else:
+      for i in resp['data']:
+        if i['Title'] == '每日学生疫情上报':
+          TaskId = i['TaskId']
+          self.extend['TaskId'] = TaskId
 
-        data = json.dumps(self.data, ensure_ascii=False)
-        extend = json.dumps(self.extend, ensure_ascii=False)
+          url = f'https://api.uyiban.com/officeTask/client/index/detail?TaskId={TaskId}&CSRF={CSRF}'
+          WFId = self.req(url, cookies=COOKIE).json()['data']['WFId']
+          data = json.dumps(self.data, ensure_ascii=False)
+          extend = json.dumps(self.extend, ensure_ascii=False)
 
-        url = f'https://api.uyiban.com/workFlow/c/my/apply/{WFId}?CSRF={self.CSRF}'
-        data = {
-            'data': data,
-            'extend': extend,
-        }
-        resp = self.req(url, method='post', data=data, cookies=COOKIE).json()
-        if resp['code'] == 0:
-            return "打卡成功"
-        else:
-            raise 'Error: doSubmit'
-    except:
-        return "无未打卡信息"
+          url = f'https://api.uyiban.com/workFlow/c/my/apply/{WFId}?CSRF={CSRF}'
+          data = {
+              'data': data,
+              'extend': extend,
+          }
+          resp = self.req(url, method='post', data=data, cookies=COOKIE).json()
+          if resp['code'] == 0:
+              return "打卡成功"
+          else:
+              return 'Error: doSubmit'
+      return 'Error: TaskId'
 
 
 def doCrypto(password):
