@@ -23,4 +23,8 @@ BARK_PUSH = XXXXX
     "password": ""
   }
 ],
+
+# FIX
+"data": {...}
+"extend": {...}
 ```
