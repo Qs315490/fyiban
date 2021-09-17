@@ -77,4 +77,3 @@ if ENV['BARK_PUSH'] in os.environ:
   print("已从环境变量中获取bark")
   requests.post(url=f'https://api.day.app/{bark}/{result}')
   print("推送成功")
-
