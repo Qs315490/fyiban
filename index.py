@@ -65,9 +65,9 @@ def main():
       print("已从环境变量中获取password")
     else:
       raise "密码为空"
-
   result = name + Yiban(mobile, password, data, extend).main()
-  msg = title + result
+  msg = msg + '\n' + result
+  return title + msg
 
 
 result = main()
