@@ -47,33 +47,41 @@ def main():
       msg = msg + '\n' + result
       return title + msg
 
-  if name == '':
-    if ENV['YIBAN_NAME'] in os.environ:
-      name = os.getenv('YIBAN_NAME')
-      print("已从环境变量中获取name")
-      
-  if mobile == '':
-    if ENV['YIBAN_MOBILE'] in os.environ:
-      mobile = os.getenv('YIBAN_MOBILE')
-      print("已从环境变量中获取mobile")
-    else:
-      raise "账号为空"
+  if ENV['YIBAN_NAME'] in os.environ:
+    name = os.getenv('YIBAN_NAME')
+    print("已从环境变量中获取name")
+    
+  if ENV['YIBAN_MOBILE'] in os.environ:
+    mobile = os.getenv('YIBAN_MOBILE')
+    print("已从环境变量中获取mobile")
+  else:
+    raise "账号为空"
 
-  if password == '':
-    if ENV['YIBAN_PASSWORD'] in os.environ:
-      password = os.getenv('YIBAN_PASSWORD')
-      print("已从环境变量中获取password")
-    else:
-      raise "密码为空"
+  if ENV['YIBAN_PASSWORD'] in os.environ:
+    password = os.getenv('YIBAN_PASSWORD')
+    print("已从环境变量中获取password")
+  else:
+    raise "密码为空"
+
+  if ENV['YIBAN_DATA'] in os.environ:
+    data = os.getenv('YIBAN_DATA')
+    print("已从环境变量中获取data")
+
+  if ENV['YIBAN_EXTEND'] in os.environ:
+    extend = os.getenv('YIBAN_EXTEND')
+    print("已从环境变量中获取extend")
+
+
   result = name + Yiban(mobile, password, data, extend).main()
   msg = msg + '\n' + result
   return title + msg
 
 
-result = main()
-print(result)
-if ENV['BARK_PUSH'] in os.environ:
-  bark = os.getenv('BARK_PUSH')
-  print("已从环境变量中获取bark")
-  requests.post(url=f'https://api.day.app/{bark}/{result}')
-  print("推送成功")
+if __name__ == '__main__':
+  result = main()
+  print(result)
+  if ENV['BARK_PUSH'] in os.environ:
+    bark = os.getenv('BARK_PUSH')
+    print("已从环境变量中获取bark")
+    requests.post(url=f'https://api.day.app/{bark}/{result}')
+    print("推送成功")
