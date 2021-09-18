@@ -64,11 +64,11 @@ def main():
     raise "密码为空"
 
   if ENV['YIBAN_DATA'] in os.environ:
-    data = os.getenv('YIBAN_DATA')
+    data = json.loads(os.getenv('YIBAN_DATA'))
     print("已从环境变量中获取data")
 
   if ENV['YIBAN_EXTEND'] in os.environ:
-    extend = os.getenv('YIBAN_EXTEND')
+    extend = json.loads(os.getenv('YIBAN_EXTEND'))
     print("已从环境变量中获取extend")
 
 
