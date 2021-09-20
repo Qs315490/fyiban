@@ -23,6 +23,8 @@ jobs:
         YIBAN_NAME: ${{ secrets.YIBAN_NAME }}
         YIBAN_MOBILE: ${{ secrets.YIBAN_MOBILE }}
         YIBAN_PASSWORD: ${{ secrets.YIBAN_PASSWORD }}
+        YIBAN_DATA: ${{ secrets.YIBAN_DATA }}
+        YIBAN_EXTEND: ${{ secrets.YIBAN_EXTEND }}
         BARK_PUSH: ${{ secrets.BARK_PUSH }}
       run: |
         python index.py
