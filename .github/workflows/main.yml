@@ -25,6 +25,8 @@ jobs:
         YIBAN_PASSWORD: ${{ secrets.YIBAN_PASSWORD }}
         YIBAN_DATA: ${{ secrets.YIBAN_DATA }}
         YIBAN_EXTEND: ${{ secrets.YIBAN_EXTEND }}
+        DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+        DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
         BARK_PUSH: ${{ secrets.BARK_PUSH }}
       run: |
         python index.py
