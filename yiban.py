@@ -63,6 +63,16 @@ class Yiban():
     url = f'https://api.uyiban.com/base/c/auth/yiban?verifyRequest={verify}&CSRF={CSRF}'
     resp = self.req(url, cookies=COOKIE).json()
 
+    """
+    重认证
+    """
+    url = 'https://oauth.yiban.cn/code/usersure'
+    data = {
+      'client_id': '95626fa3080300ea',
+      'redirect_uri': 'https://f.yiban.cn/iapp7463'
+    }
+    resp = self.req(url, data=data, method='post')
+
   def doSubmit(self):
     """
     打卡提交
