@@ -79,8 +79,8 @@ class Yiban():
     """
     url = f'https://api.uyiban.com/officeTask/client/index/uncompletedList?StartTime={getStartTime()}&EndTime={getEndTime()}&CSRF={CSRF}'
     resp = self.req(url, cookies=COOKIE).json()
-    if resp['data'] == []:
-      return "无未打卡信息"
+    if resp['data'] is None:
+      return "Error：认证失败"
     else:
       for i in resp['data']:
         if i['Title'] == '每日学生疫情上报':
@@ -102,7 +102,7 @@ class Yiban():
               return "打卡成功"
           else:
               return 'Error: doSubmit'
-      return 'Error: TaskId'
+      return '无未打卡信息'
 
 
 def doCrypto(password):
