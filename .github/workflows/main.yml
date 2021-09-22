@@ -2,7 +2,8 @@ name: Yiban
 
 on:
   workflow_dispatch:
-
+  schedule:
+    - cron: '10 0 * * *'
 jobs:
   main:
     runs-on: ubuntu-latest
