@@ -33,6 +33,7 @@ def main():
   mobile = ''
   password = ''
   msg = ''
+  title = f'{time.strftime("%m-%d", time.localtime())}易班打卡'
 
   try:
     with open('./config.json', 'rb') as f:
