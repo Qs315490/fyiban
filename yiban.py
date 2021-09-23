@@ -65,13 +65,15 @@ class Yiban():
 
     """
     重认证
-    """
+    测试，校本化授权大概在半个月左右，
+    过期后需重新授权
     url = 'https://oauth.yiban.cn/code/usersure'
     data = {
       'client_id': '95626fa3080300ea',
       'redirect_uri': 'https://f.yiban.cn/iapp7463'
     }
     resp = self.req(url, data=data, method='post')
+    """
 
   def doSubmit(self):
     """
