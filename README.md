@@ -33,3 +33,6 @@ DD_BOT_SECRET = XXXXX
 "data": {...}
 "extend": {...}
 ```
+
+## 10.14更新：
+## 提交表单数据中data和extend替换成Str
