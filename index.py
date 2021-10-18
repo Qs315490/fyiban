@@ -211,13 +211,18 @@ if __name__ == '__main__':
     ]
     SubList = []
     for i in USER:
-        sub = Yiban(i['mobile'], i['password']).submit_task()
-        print(sub)
-        # Code为0，程序未正常运行
-        # Code为1，存在未打卡任务，构造data对象，存进预打卡列表
-        # Code为2，未找到打卡任务，跳过
-        # 若存在data 则添加到预打卡列表
-        if 'data' in sub: 
-            SubList.append(sub['data'])
+        try:
+            # Code为0，程序未正常运行
+            # Code为1，存在未打卡任务，构造data对象，存进预打卡列表
+            # Code为2，未找到打卡任务，跳过
+            # 若存在data 则添加到预打卡列表
+            sub = Yiban(i['mobile'], i['password']).submit_task()
+            print(sub)
+            if 'data' in sub: 
+                SubList.append(sub['data'])
+        except:
+            print(f"{i['name']}: Error")
+            continue
+
     if len(SubList) != 0:
     	SubmitTask(SubList) # 转至自动化打卡
