@@ -2,21 +2,13 @@
 ### 适用于易班校本化分应用打卡
 ### 提交表单需要手动抓一次包
 
-## 支持环境变量
-```
-YIBAN_MOBILE = XXXXX
-YIBAN_PASSWORD = XXXXX
-YIBAN_DATA = XXXXX
-YIBAN_EXTEND = XXXXX
-BARK_PUSH = XXXXX 
-DD_BOT_TOKEN = XXXXX
-DD_BOT_SECRET = XXXXX
-```
+## 10.14更新：
+## 提交表单数据中data和extend替换成Str
 
-## config.json
+### index.py
 ### 适用于多人打卡
 ```
-"user": [
+"USER": [
   {
     "name": "",
     "mobile": "",
@@ -29,10 +21,11 @@ DD_BOT_SECRET = XXXXX
   }
 ],
 
-# FIX
+# FIX 
+# 因学业原因，逆向js需要时间。
+# 暂时改用Selenium进行打卡，详情查看注释
+# data与extend暂时弃用
 "data": {...}
 "extend": {...}
 ```
 
-## 10.14更新：
-## 提交表单数据中data和extend替换成Str
