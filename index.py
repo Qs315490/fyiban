@@ -1,4 +1,5 @@
 import re
+import os
 import time
 import json
 import base64
@@ -106,6 +107,9 @@ class Yiban():
             cookies = COOKIE).json()
 
             if resp['data'] is None:
+                """
+                校本化认证过期，尝试重新验证
+                """
                 resp = session.post(
                     url = 'https://oauth.yiban.cn/code/usersure', 
                     data = {'client_id': '95626fa3080300ea', 'redirect_uri': 'https://f.yiban.cn/iapp7463'} ,
@@ -116,7 +120,7 @@ class Yiban():
                 raise Exception('认证失败')
             else:
                 for t in resp['data']:
-                    if t['Title'] == '每日学生疫情上报':
+                    if t['Title'] == '每日学生疫情上报': # 打卡任务标题
                         taskid = t['TaskId']
                         wfid = session.get(
                             url = 'https://api.uyiban.com/officeTask/client/index/detail', 
@@ -171,17 +175,19 @@ class Yiban():
         location: 位置信息
         temperature: 体温
         cookieValue: PHPSESSID值
-        journeyCode: 行程码图片路径 'C:/Users/Sricor/OneDrive/Data/img/1.jpg'
+        journeyCode: 行程码图片路径 例如'C:/Users/Sricor/OneDrive/Data/img/1.jpg'
         healthCode: 健康码图片路径
+        图片路径默认当前目录下xxx.jpg
         """
+        path = os.path.dirname(__file__) # 获取当前文件目录
         data = {
             'name': name,  # 名称
             'unHealth': '否',  # 健康异常状态(非必须)
             'wfid': wfid,  # wfid
             'temperature': '36.5',  # 体温 默认36.5
             'location': '示例位置',  # 位置
-            'journeyCode': 'C:/Users/Sricor/OneDrive/Data/图片/2.jpg',  # 行程码图片路径
-            'healthCode': 'C:/Users/Sricor/OneDrive/Data/图片/2.jpg',  # 健康码图片路径
+            'journeyCode': os.path.join(path, 'journeyCode.jpg'),  # 行程码图片路径
+            'healthCode': os.path.join(path, 'healthCode.jpg'),  # 健康码图片路径
             'cookie': {
                 'name': 'PHPSESSID', 
                 'value': cookieValue, 
@@ -205,6 +211,13 @@ if __name__ == '__main__':
     ]
     SubList = []
     for i in USER:
-        sub = Yiban(i['mobile'], i['password']).submit_task()['data']
-        SubList.append(sub)
-    SubmitTask(SubList)
+        sub = Yiban(i['mobile'], i['password']).submit_task()
+        print(sub)
+        # Code为0，程序未正常运行
+        # Code为1，存在未打卡任务，构造data对象，存进预打卡列表
+        # Code为2，未找到打卡任务，跳过
+        # 若存在data 则添加到预打卡列表
+        if 'data' in sub: 
+            SubList.append(sub['data'])
+    
+    SubmitTask(SubList) # 转至自动化打卡
