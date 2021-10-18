@@ -4,7 +4,7 @@
 
 ## 10.14更新：
 ## 提交表单数据中data和extend替换成Str
-## 暂时使用Selenium进行最后一步的打卡
+## 暂时使用Selenium进行最后一步的提交
 
 ### index.py
 ### 适用于多人打卡
