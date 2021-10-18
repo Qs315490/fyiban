@@ -220,8 +220,8 @@ if __name__ == '__main__':
             print(sub)
             if 'data' in sub: 
                 SubList.append(sub['data'])
-        except:
-            print(f"{i['name']}: Error")
+        except Exception as e:
+            print(f"{i['name']}: Error {e}")
             continue
 
     if len(SubList) != 0:
