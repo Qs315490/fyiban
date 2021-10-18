@@ -219,5 +219,5 @@ if __name__ == '__main__':
         # 若存在data 则添加到预打卡列表
         if 'data' in sub: 
             SubList.append(sub['data'])
-    
-    SubmitTask(SubList) # 转至自动化打卡
+    if len(SubList) != 0:
+    	SubmitTask(SubList) # 转至自动化打卡
