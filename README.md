@@ -7,9 +7,10 @@
 ## 提交表单数据中data和extend替换成Str
 ## 暂存Cookie使用Selenium进行最后一步的提交
 
-### index.py
-### 适用于多人打卡
+
 ```
+# index.py
+# 适用于多人打卡
 "USER": [
   {
     "name": "",
