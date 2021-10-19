@@ -80,12 +80,12 @@ class SubmitTask():
         self.selectXPath('//*[@id="root"]/div/main/div[4]/div[5]/div[3]/div/div/div/div[1]/div/input').send_keys(data['healthCode'])  # 健康码
         
         # 动态元素选择，弹出滑动框，异常状态选择否
-        time.sleep(1)
+        time.sleep(3)
         self.selectXPath('//*[@id="root"]/div/main/div[4]/div[1]/div[2]').click()  # 弹出滑动选择框
-        time.sleep(1)
+        time.sleep(3)
         unHealth = self.selectXPath('//*[contains(@id,"am-modal-container")]/div/div[2]/div/div/div/div[2]/div/div/div[3]/div[1]')  # 滑动选择
         self.action.click_and_hold(unHealth).move_by_offset(0, -35).release().perform()  # 向下滑动
-        time.sleep(1)
+        time.sleep(3)
         self.selectXPath('//*[contains(@id,"am-modal-container")]/div/div[2]/div/div/div/div[1]/a[2]').click() # 确定
 
         self.selectXPath('//*[@id="root"]/div/footer/a').click()  # 提交
