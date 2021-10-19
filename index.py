@@ -174,7 +174,7 @@ class Yiban():
         name: 名称
         location: 位置信息
         temperature: 体温
-        cookieValue: PHPSESSID值
+        cookieValue: PHPSESSID值 由request返回
         journeyCode: 行程码图片路径 例如'C:/Users/Sricor/OneDrive/Data/img/1.jpg'
         healthCode: 健康码图片路径
         图片路径默认当前目录下xxx.jpg
