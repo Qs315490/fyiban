@@ -20,5 +20,4 @@ jobs:
 
     - name: Run Yiban
       run: |
-        google-chrome --version
         python index.py
