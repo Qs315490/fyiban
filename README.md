@@ -1,36 +1,23 @@
 # YibanAuto
 ### 适用于易班校本化分应用打卡
-### 提交表单需要手动抓一次包
-### 可直接Fork利用Actions运行
+### index.py中提交表单需要手动抓一次包
 
-## 10.14更新：
-## 提交表单数据中data和extend替换成Str
-## 暂存Cookie使用Selenium进行最后一步的提交
+### 10.14更新：
+### 提交表单数据中data和extend替换成Str
 
 
 ```
 # index.py
-# 适用于多人打卡
-"USER": [
-  {
-    "name": "",  # 名称
-    "mobile": "",  # 账号
-    "password": ""  # 密码
-  },
-  {
-    "name": "",
-    "mobile": "",
-    "password": ""
-  }
-],
-```
+# 打卡列表
+# mobile: 账号
+# password: 密码
+UserList = [
+    {"name": "", "mobile": "", "password": ""},
+    {"name": "", "mobile": "", "password": ""},
+    {...}
+]
 
-
-```
-# FIX 
-# 暂时改用Selenium进行打卡，详情查看submit.py注释
-# data与extend暂时弃用
-"data": {...}
-"extend": {...}
+# 提交表单
+"postData": {...}
 ```
 
