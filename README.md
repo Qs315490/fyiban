@@ -28,7 +28,6 @@
 
 ```
 # FIX 
-# 因学业原因，逆向js需要时间。
 # 暂时改用Selenium进行打卡，详情查看submit.py注释
 # data与extend暂时弃用
 "data": {...}
