@@ -74,4 +74,5 @@ def main():
             #wechat(corpid, agentid, corpsecret, msg) # 企业微信推送
             return msg
 
-main()
+if __name__ == '__main__':
+    main()
