@@ -66,13 +66,14 @@ def main():
         try:
             result = Yiban(i['mobile'], i['password']).submit(postData)
             msg = f'{msg}\n {result["name"]}: {result["msg"]}'
+            print(result)
         except:
             msg = f'{msg}\n {i["name"]}: Error'
             continue
         finally:
-            print(result)
             #wechat(corpid, agentid, corpsecret, msg) # 企业微信推送
             return msg
 
 if __name__ == '__main__':
-    main()
+    msg = main()
+    print(msg)
