@@ -25,7 +25,7 @@ UserList = [
 
 # 提交表单
 # 需要手动抓包填写
-postData = {
+PostData = {
     "WFId": "",
     "Data": {
         "9843754e97aad058523524bdb8991bcd": "否", 
@@ -64,7 +64,7 @@ def main():
     msg = f"{time.strftime('%m-%d',time.localtime(time.time()))} 易班打卡："
     for i in UserList:
         try:
-            result = Yiban(i['mobile'], i['password']).submit(postData)
+            result = Yiban(i['mobile'], i['password']).submit(PostData)
             msg = f'{msg}\n {result["name"]}: {result["msg"]}'
             print(result)
         except:
