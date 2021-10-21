@@ -112,14 +112,16 @@ class Yiban():
                 # 任务打卡
                 for i in resp['data']:
                     if i['Title'] == taskTitle:
-                        postData['TaskId'] = i['TaskId']
+                        postData['Extend']['TaskId'] = i['TaskId']
                         postData['WFId'] = session.get(
                             url = 'https://api.uyiban.com/officeTask/client/index/detail', 
                             params = {'TaskId': i['TaskId'], 'CSRF': CSRF},
                             headers = HEADERS,
                             cookies = COOKIE
                         ).json()['data']['WFId']
-                        
+
+                        postData['Data'] = json.dumps(postData['Data'], ensure_ascii=False)
+                        postData['Extend'] = json.dumps(postData['Extend'], ensure_ascii=False)
                         postData = json.dumps(postData, ensure_ascii=False)       
                         resp = session.post(
                             url = f'https://api.uyiban.com/workFlow/c/my/apply',

@@ -13,10 +13,10 @@ from utils import wechat
 # mobile: 账号
 # password: 密码
 UserList = [
-    {"name": "", "mobile": "", "password": ""},
-    {"name": "", "mobile": "", "password": ""},
-    {...}
-]
+        {"name": "", "mobile": "", "password": ""}, 
+        {"name": "", "mobile": "", "password": ""}, 
+        {...}, 
+    ]
 
 # 微信推送
 #agentid = ''
@@ -71,9 +71,10 @@ def main():
             msg = f'{msg}\n {i["name"]}: Error'
             continue
         finally:
-            #wechat(corpid, agentid, corpsecret, msg) # 企业微信推送
-            return msg
+            time.sleep(1)
+    return msg
 
 if __name__ == '__main__':
     msg = main()
     print(msg)
+    #wechat(corpid, agentid, corpsecret, msg) # 企业微信推送
