@@ -13,7 +13,7 @@ from yiban import Yiban
 # 打卡列表
 # mobile: 账号
 # password: 密码
-UserList = [
+USERLIST = [
         {"name": "", "mobile": "", "password": ""}, 
         {"name": "", "mobile": "", "password": ""}, 
         {...}, 
@@ -22,7 +22,7 @@ UserList = [
 # 提交表单
 # 需要手动抓包
 # crypter.py aes_decrypt()解密填写
-PostData = {
+POSTDATA = {
     "WFId": "",
     "Data": {
         "9843754e97aad058523524bdb8991bcd": "否", 
@@ -58,11 +58,11 @@ PostData = {
     }
 }
 
-def main():
+def main_handler(data=None, extend=None):
     msg = f"{time.strftime('%m-%d',time.localtime(time.time()))} 易班打卡："
-    for i in UserList:
+    for i in USERLIST:
         try:
-            result = Yiban(i['mobile'], i['password']).submit(PostData)
+            result = Yiban(i['mobile'], i['password']).submit(POSTDATA)
             msg = f'{msg}\n {result["name"]}: {result["msg"]}'
             print(result)
         except Exception as e:
@@ -73,7 +73,7 @@ def main():
     return msg
 
 if __name__ == '__main__':
-    msg = main()
+    msg = main_handler()
     print(msg)
     # 企业微信推送
     # agentid = ''

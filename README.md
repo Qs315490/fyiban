@@ -11,13 +11,13 @@
 # 打卡列表
 # mobile: 账号
 # password: 密码
-UserList = [
+USERLIST = [
     {"name": "", "mobile": "", "password": ""},
     {"name": "", "mobile": "", "password": ""},
     {...}
 ]
 
 # 提交表单
-"postData": {...}
+"POSTDATA": {...}
 ```
 

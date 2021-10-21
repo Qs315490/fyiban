@@ -65,6 +65,7 @@ class Yiban():
                 allow_redirects = False
             )
             verify = re.findall(r"verify_request=(.*?)&", resp.headers.get("Location"))[0]
+            time.sleep(1.5)
             resp = session.get(
                 url = 'https://api.uyiban.com/base/c/auth/yiban', 
                 params = {'verifyRequest': verify, 'CSRF': CSRF},
