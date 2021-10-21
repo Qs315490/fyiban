@@ -123,7 +123,8 @@ class Yiban():
 
                         postData['Data'] = json.dumps(postData['Data'], ensure_ascii=False)
                         postData['Extend'] = json.dumps(postData['Extend'], ensure_ascii=False)
-                        postData = json.dumps(postData, ensure_ascii=False)       
+                        postData = json.dumps(postData, ensure_ascii=False)
+                        time.sleep(1)
                         resp = session.post(
                             url = f'https://api.uyiban.com/workFlow/c/my/apply',
                             params = {'CSRF': CSRF},
