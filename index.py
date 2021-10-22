@@ -30,18 +30,18 @@ POSTDATA = {
         "769bbfbfb026629f1ddb0294a9c0d257": "示例位置", 
         "90b5b83950ae456fefebb0f751406e2d": [{ 
             "name": "348816E7-275F-42D8-9118-625FB45D8D48.png", 
-            "type": "image/png ", 
+            "type": "image/png", 
             "size ": 472092, 
-            "status": "done ", 
+            "status": "done", 
             "percent ": 100, 
             "fileName": "workflow/202110/18/4c3599675b629e14e80ffe19c507b806.png ", 
             "path": "workflow/202110/18/4c3599675b629e14e80ffe19c507b806.png "
         }],
         "0242914b8746275c5073ccdb156f9d1d": [{ 
             "name": "86E7DCB9-7FEE-441F-B921-039302A1048B.png", 
-            "type": "image/png ", 
+            "type": "image/png", 
             "size": 175580, 
-            "status": "done ", 
+            "status": "done", 
             "percent": 100, 
             "fileName": "workflow/202110/18/b82da80c3a4dc4ad6f4a1ebe325fb033.png ", 
             "path": "workflow/202110/18/b82da80c3a4dc4ad6f4a1ebe325fb033.png "
