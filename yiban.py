@@ -175,3 +175,4 @@ class Yiban():
 if __name__ == '__main__':
     task = Yiban('1', '1').submit_task()
     print(task)
+    # Yiban('1', '1')
