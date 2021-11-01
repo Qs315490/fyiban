@@ -1,23 +1,23 @@
 # YibanAuto
 ### 适用于易班校本化分应用打卡
-### index.py中提交表单需要手动抓一次包
-
-### 10.14更新：
-### 提交表单数据中data和extend替换成Str
+### config.json中提交表单需要手动抓包填写
 
 
+## Usage
 ```
-# index.py
-# 打卡列表
-# mobile: 账号
-# password: 密码
-USERLIST = [
-    {"name": "", "mobile": "", "password": ""},
-    {"name": "", "mobile": "", "password": ""},
-    {...}
-]
+# edit config.json
+{
+    "UserList": [
+        {"name": "张三", "mobile": "mobile", "password": "password"}, 
+        {...}
+    ],
 
-# 提交表单
-"POSTDATA": {...}
+    "SubmitData": {
+        "Data": {...}, 
+        "Extend": {...}
+    }
+}
+
+# python index.py
 ```
 

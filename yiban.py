@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 # @Author: Sricor
-# @Date: 2021-10-20
+# @Date: 2021-11-01
 
 import re
 import time
@@ -32,38 +32,23 @@ class Yiban():
     def __init__(self, mobile, password):
         self.csrf = '000000'
         self.session = requests.session()
-        self.result = {'code': 0, 'name': '', 'msg': ''}
 
-        # get name&access_token
-        resp = requests.post(
-            url = 'https://mobile.yiban.cn/api/v4/passport/login',
-            headers = {'AppVersion': '5.0'}, 
-            data = {
-                'mobile': mobile,
-                'password': rsa_encrypt(RSA_KEY, password),
-                'ct': '2',
-                'identify': '1'
-            }
-        ).json()
-        if 'access_token' in resp['data']:
-            self.result['name'] = resp['data']['user']['name']
-            self.access_token = resp['data']['access_token']
-        else:
-            raise Exception('Login Error')
+        user_info = self.login(mobile, password)
+        self.name = user_info['name']
+        self.access_token = user_info['access_token']
+        # print(user_info)
     
-    def req(self, url, method='get', params=None, data=None, allow_redirects=True, timeout=10):
-        """
-        requests
-        增加请求延时，避免请求过快 Error104
-        """
-        time.sleep(1)
-        cookies = { 'loginToken': self.access_token, 'csrf_token': self.csrf}
-        headers = {"Origin": "https://c.uyiban.com", "User-Agent": "Yiban", "AppVersion": "5.0"}
+    def req(self, url, method='get', cookies={}, headers={}, timeout=10, allow_redirects=True, **kwargs):
+        time.sleep(1) # 增加请求延时，避免请求过快 Error104
+        data = kwargs.get("data")
+        params = kwargs.get("params")
+        cookies.update({'csrf_token': self.csrf})
+        headers.update({"Origin": "https://c.uyiban.com", "User-Agent": "Yiban", "AppVersion": "5.0"})
         if method == 'get':
             return self.session.get(
-                url = url, 
-                params = params,
-                data = data,
+                url     = url, 
+                data    = data,
+                params  = params,
                 headers = headers, 
                 cookies = cookies, 
                 timeout = timeout,
@@ -71,9 +56,9 @@ class Yiban():
             )
         elif method == 'post':
             return self.session.post(
-                url = url, 
-                params = params,
-                data = data, 
+                url     = url, 
+                data    = data,
+                params  = params,
                 headers = headers, 
                 cookies = cookies, 
                 timeout = timeout,
@@ -82,97 +67,111 @@ class Yiban():
         else:
             return 'Requests method error'
 
-    def submit(self, postData):
-        """
-        SubmitTask
-        postData: 提交表单 
-        """
-        try:
+    def login(self, mobile, password):
+        resp = self.req(
+            method= 'post',
+            url = 'https://mobile.yiban.cn/api/v4/passport/login',
+            data = {
+                'ct':       '2',
+                'identify': '1',
+                'mobile':   mobile,
+                'password': rsa_encrypt(RSA_KEY, password),
+            }
+        ).json()
+        # print(resp)
+        if resp['response'] == 100:
+            name = resp['data']['user']['name']
+            access_token = resp['data']['access_token']
+            return {'name': name, 'access_token': access_token}
+        else:
+            raise Exception(f'Login Error: {mobile} Message: {resp["message"]}')
+    
+    def submit_task(self):
+        with open('config.json', encoding='utf-8') as f:
+            json_data = json.load(f)
+        submit_data = json_data['SubmitData']  # 提交表单数据
+        for t in submit_data['Extend']['content']:
+            if t['label'] == '任务名称':
+                task_title = t['value'] # 任务名称
+
+        task_list = []    # 任务列表
+        result_data = {'code': 0, 'name':self.name, 'msg': ''}  # 返回字典
+
+        # 校本化认证
+        resp = self.req(
+            url='http://f.yiban.cn/iapp/index', 
+            params={'act': 'iapp7463'},
+            cookies={'loginToken': self.access_token},
+            allow_redirects=False
+        )
+        verify = re.findall(r"verify_request=(.*?)&", resp.headers.get("Location"))[0]
+        resp = self.req(
+            url='https://api.uyiban.com/base/c/auth/yiban', 
+            params={'verifyRequest': verify, 'CSRF': self.csrf},
+        )
+
+        # 获取未完成任务列表
+        resp = self.req(
+            url='https://api.uyiban.com/officeTask/client/index/uncompletedList', 
+            params={
+                'StartTime': (datetime.datetime.now()+datetime.timedelta(days=-14)).strftime('%Y-%m-%d'),
+                'EndTime': time.strftime("%Y-%m-%d 23:59", time.localtime()),
+                'CSRF': self.csrf
+            }
+        ).json()
+
+        # 校本化认证过期，尝试重新验证
+        if resp['data'] is None:
             resp = self.req(
-                url = 'http://f.yiban.cn/iapp/index', 
-                params = {'act': 'iapp7463'},
-                allow_redirects = False
+                method='post',
+                url='https://oauth.yiban.cn/code/usersure', 
+                data={'client_id': '95626fa3080300ea', 'redirect_uri': 'https://f.yiban.cn/iapp7463'}
             )
-            verify = re.findall(r"verify_request=(.*?)&", resp.headers.get("Location"))[0]
+            result_data['msg'] = '校本化认证失败，请重试'
+            return result_data
+        
+        # 遍历未完成任务列表
+        for i in resp['data']:
+            # 判断任务标题
+            if i['Title'] == task_title:
+                task_id = i['TaskId']
+                submit_data['WFId'] = self.req(
+                    url='https://api.uyiban.com/officeTask/client/index/detail', 
+                    params={'TaskId': task_id, 'CSRF': self.csrf}
+                ).json()['data']['WFId']
+                submit_data['Extend']['TaskId'] = task_id
+                submit_data['Data'] = json.dumps(submit_data['Data'], ensure_ascii=False)
+                submit_data['Extend'] = json.dumps(submit_data['Extend'], ensure_ascii=False)
+                postData = json.dumps(submit_data, ensure_ascii=False)
 
-            resp = self.req(
-                url = 'https://api.uyiban.com/base/c/auth/yiban', 
-                params = {'verifyRequest': verify, 'CSRF': self.csrf},
-            ).json()
-
-        except Exception as e:
-            self.result['msg'] = f'[Error]Auth: {e}'
-            return self.result
-
-        try:
-            resp = self.req(
-                url = 'https://api.uyiban.com/officeTask/client/index/uncompletedList', 
-                params = {
-                    'StartTime': (datetime.datetime.now() + datetime.timedelta(days=-14)).strftime('%Y-%m-%d'),
-                    'EndTime': time.strftime("%Y-%m-%d 23:59", time.localtime()),
-                    'CSRF': self.csrf
-                }
-            ).json()
-
-            if resp['data'] is None:
-                """
-                校本化认证过期，尝试重新验证
-                """
                 resp = self.req(
-                    method = 'post',
-                    url = 'https://oauth.yiban.cn/code/usersure', 
-                    data = {'client_id': '95626fa3080300ea', 'redirect_uri': 'https://f.yiban.cn/iapp7463'}
-                )
-                raise Exception('认证失败')
-            else:
-                # 任务列表
-                taskList = []
+                    method='post',
+                    url='https://api.uyiban.com/workFlow/c/my/apply',
+                    params={'CSRF': self.csrf},
+                    data={'Str': aes_encrypt(AES_KEY, AES_IV, postData)}
+                ).json()
 
-                # 任务名称
-                for t in postData['Extend']['content']:
-                    if t['label'] == '任务名称':
-                        taskTitle = t['value']
-                
-                # 任务打卡
-                for i in resp['data']:
-                    if i['Title'] == taskTitle:
-                        TaskId = i['TaskId']
-
-                        postData['WFId'] = self.req(
-                            url = 'https://api.uyiban.com/officeTask/client/index/detail', 
-                            params = {'TaskId': TaskId, 'CSRF': self.csrf}
-                        ).json()['data']['WFId']
-                        postData['Extend']['TaskId'] = TaskId
-                        postData['Data'] = json.dumps(postData['Data'], ensure_ascii=False)
-                        postData['Extend'] = json.dumps(postData['Extend'], ensure_ascii=False)
-                        postData = json.dumps(postData, ensure_ascii=False)
-
-                        resp = self.req(
-                            method = 'post',
-                            url = f'https://api.uyiban.com/workFlow/c/my/apply',
-                            params = {'CSRF': self.csrf},
-                            data = {'Str': aes_encrypt(AES_KEY, AES_IV, postData)}
-                        ).json()
-
-                        if resp['code'] == 0:
-                            self.result['code'] = 1
-                            self.result['msg'] = '打卡成功'
-                            return self.result
-                        else:
-                            self.result['msg'] = resp['msg']
-                            return self.result
-                    else:
-                        taskList.append(i['Tittle'])
-                        self.result['task'] = taskList
-                        continue
-
-                self.result['code'] = 2
-                if len(taskList) == 0:
-                    self.result['msg'] = '无未打卡任务'
+                # 打卡成功
+                if resp['code'] == 0:
+                    result_data['code'] = 1
+                    result_data['msg'] = '打卡成功'
+                    return result_data
+                # Error
                 else:
-                    self.result['msg'] = '当前存在其他任务：'.join(taskList)
-                return self.result
+                    result_data['msg'] = resp['msg']
+                    return result_data
+            else:
+                task_list.append(i['Tittle'])
+                result_data['task'] = task_list
 
-        except Exception as e:
-            self.result['msg'] = f'[Error]Submit: {e}'
-            return self.result
+        # 无未打卡任务或存在其他任务
+        result_data['code'] = 2
+        if len(task_list) == 0:
+            result_data['msg'] = '无未打卡任务'
+        else:
+            result_data['msg'] = f'当前存在其他任务：{task_list}'
+        return result_data
+
+if __name__ == '__main__':
+    task = Yiban('18127580124', 'cjc18127580124').submit_task()
+    print(task)
