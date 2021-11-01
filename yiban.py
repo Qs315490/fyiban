@@ -173,5 +173,5 @@ class Yiban():
         return result_data
 
 if __name__ == '__main__':
-    task = Yiban('18127580124', 'cjc18127580124').submit_task()
+    task = Yiban('1', '1').submit_task()
     print(task)
