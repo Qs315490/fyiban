@@ -25,8 +25,15 @@
                 "status": "done", 
                 "percent": 100, 
                 "fileName": "workflow/202110/23/30150ea922a720e7fb732eb7150cc532.png ", 
-                "path": "workflow/202110/23/30150ea922a720e7fb732eb7150cc532.png "}
-            ]},
+                "path": "workflow/202110/23/30150ea922a720e7fb732eb7150cc532.png "
+            }],
+            "1bac180dd37455f7c16a36336c0411a8":{
+                "time":"2022-01-16 12:00",
+                "longitude":113.27,
+                "latitude":23.13,
+                "address":"广东省广州市天河区"
+            }
+        },
         "Extend": { 
             "TaskId": "", 
             "title": "任务信息", 
