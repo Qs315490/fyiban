@@ -134,8 +134,8 @@ class Yiban():
                     url = 'https://oauth.yiban.cn/code/usersure', 
                     data = {'client_id': client_id, 'redirect_uri': redirect_uri},
                 )
-            result_data['msg'] = '校本化认证失败，请重试'
-            return result_data
+        result_data['msg'] = '校本化认证失败，请重试'
+        return result_data
         
         # 遍历未完成任务列表
         for i in resp['data']:
