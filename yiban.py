@@ -122,20 +122,20 @@ class Yiban():
 
         # 校本化认证过期，尝试重新验证
         if resp['data'] is None:
-                client_id = '95626fa3080300ea'
-                redirect_uri = 'https://f.yiban.cn/iapp7463'
-                resp = self.req(
-                    method = 'get',
-                    url = 'https://oauth.yiban.cn/code/html',
-                    params = {'client_id': client_id, 'redirect_uri': redirect_uri}
-                )
-                resp = self.req(
-                    method = 'post',
-                    url = 'https://oauth.yiban.cn/code/usersure', 
-                    data = {'client_id': client_id, 'redirect_uri': redirect_uri},
-                )
-        result_data['msg'] = '校本化认证失败，请重试'
-        return result_data
+            client_id = '95626fa3080300ea'
+            redirect_uri = 'https://f.yiban.cn/iapp7463'
+            resp = self.req(
+                method = 'get',
+                url = 'https://oauth.yiban.cn/code/html',
+                params = {'client_id': client_id, 'redirect_uri': redirect_uri}
+            )
+            resp = self.req(
+                method = 'post',
+                url = 'https://oauth.yiban.cn/code/usersure', 
+                data = {'client_id': client_id, 'redirect_uri': redirect_uri},
+            )
+            result_data['msg'] = '校本化认证失败，请重试'
+            return result_data
         
         # 遍历未完成任务列表
         for i in resp['data']:
