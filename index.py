@@ -9,7 +9,7 @@ index.py
 
 1.修改USER账号信息
 
-2.进行抓包，手动提交一次易班打卡
+2.进行易班抓包，进入APP手动提交一次易班打卡
 
 3.crypter.py解密POST表单中Str
 
@@ -17,14 +17,17 @@ index.py
 
 """
 
-from yiban import Yiban
-import datetime
-import logging
 
+import utils
+import logging
+import datetime
+import threading
+from yiban import Yiban
 
 USER = [
-    {'mobile': 'xxx', 'password': 'xxx'}, 
-    {'mobile': 'xxx', 'password': 'xxx'}
+    {"name": "xxx", "mobile": "xxxxx", "password": "xxxx"},
+    {"name": "xxx", "mobile": "xxxxx", "password": "xxxx"},
+    {"name": "xxx", "mobile": "xxxxx", "password": "xxxx"}
 ]
 
 SUBMIT_DATA = {
@@ -70,26 +73,42 @@ SUBMIT_DATA = {
     }
 }
 
-def timer(func):
-    def wrapper():
-        LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-        DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
-        logging.basicConfig(level=logging.INFO, format=LOG_FORMAT, datefmt=DATE_FORMAT)
-        print("易班打卡: ", datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), "🔔")
-        start = datetime.datetime.now()
-        print(func())
-        stop = datetime.datetime.now()
-        print(f'Time: {(stop - start).seconds}s')
-        return None
-    return wrapper
+msg = []
+msg.append(f"易班打卡: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} 🔔")
+print(f"易班打卡: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} 🔔")
 
-@timer
-def main_handler():
-    for i in USER:
+def submit(mobile: str, password: str, submit_data: dict, count=0):
+    """ 单线程 重试"""
+    while count<=3:
         try:
-            Yiban(i['mobile'], i['password']).submit_task(SUBMIT_DATA)
+            yiban = Yiban(mobile, password).submit_task(submit_data)
+            msg.append(f"{yiban['name']}: {yiban['msg']}")
+            break
         except:
-            print(f"{i['mobile']} Error")
+            count+=1
+            if count>3:
+                msg.append(f"{mobile}: Error")
+
+
+# corpid = ''
+# corpsecret = ''
+# agentid = ''
+
+@utils.Debug(level=logging.INFO) #DEBUG
+#@utils.WechatAppPush(corpid, corpsecret, agentid) # 企业微信推送
+def main_handler():
+    threads = []
+    # 为每个账号添加线程
+    for i in USER:
+        threads.append(threading.Thread(target=submit, args=(i['mobile'], i['password'], SUBMIT_DATA)))
+    for t in threads:
+        t.start() # 启动线程
+    for t in threads:
+        t.join() # 守护线程
+    return "\n".join(msg)
 
 if __name__ == '__main__':
     main_handler()
+    print(msg)
+
+ 
