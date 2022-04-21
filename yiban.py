@@ -202,8 +202,11 @@ class Yiban:
                     ).json()['data']['WFId']
                     return task_data
 
-    def submit_task(self, task_data: dict):
+    def submit_task(self, task_data: dict) -> dict:
         """
+
+        return: {'name': self.__name, 'code': resp['code'], 'msg': resp['msg']}
+
         task_data example:
         {
             "WFId": "",
@@ -248,6 +251,7 @@ class Yiban:
             }
         }
         """
+        result_msg = {'name': self.__name, 'code': 0, 'msg': ''}
         try:
             submit_data = task_data.copy() # copy dict 
         except:
@@ -257,7 +261,8 @@ class Yiban:
 
         submit_data = self.get_submit_data(submit_data)
         if submit_data == None:
-            return None
+            result_msg['msg'] = '无打卡任务'
+            return result_msg
         submit_data['Data'] = json.dumps(submit_data['Data'], ensure_ascii=False)
         submit_data['Extend'] = json.dumps(submit_data['Extend'], ensure_ascii=False)
         submit_data = self.__encrypt_aes(json.dumps(submit_data, ensure_ascii=False))
@@ -271,9 +276,13 @@ class Yiban:
         if resp['code'] == 0:
             self.log_msg(resp)
             self.log_msg('Submit succeed')
+            resp['msg'] = '打卡成功'
         else:
             # Error
             self.log_msg(resp['msg'])
+            result_msg['msg'] = result_msg['msg']
+
+        return result_msg
     
     def __encrypt_rsa(self, data):
         """
