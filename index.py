@@ -4,19 +4,8 @@
 # @Date: 2022-4-20
 
 """
-
-index.py
-
-1.修改USER账号信息
-
-2.进行易班抓包，进入APP手动提交一次易班打卡
-
-3.crypter.py解密POST表单中Str
-
-4.修改SUBMIT_DATA中提交表单数据
-
+cron "0 08 * * *" 易班打卡
 """
-
 import os
 import yiban
 import utils

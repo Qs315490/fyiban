@@ -22,17 +22,21 @@ python3 index.py
 ```
 
 
- <details>
-    <summary>Config 配置项说明</summary>
-    <li>手动抓包提交<br></li>
-    <li>找到Str加密表单<br></li>
-    <li>利用crypter.py解密<br></li>
-    <li>修改index.py config<br></li>
- </details>
+<details>
+<summary>Config 配置项说明</summary><br>
+<li>手动抓包提交<br></li>
+<li>找到 Str 加密表单<br></li>
+<li>利用 crypter.py 解密<br></li>
+<li>修改 index.py config<br></li>
+<br></details>
 
- <details>
-  <summary>Qinglong 配置</summary>
-    ```
-    ql 
-    ```
-</details>
+<br>
+
+<details>
+<summary>Qinglong 配置</summary><br>
+
+```
+ql repo https://github.com/Sricor/yiban.git "index" "crypter|yiban" "utils" "main"
+```
+
+<br></details>
