@@ -34,7 +34,7 @@ python3 index.py
 <summary>Qinglong 配置</summary><br>
 
 ```
-ql repo https://github.com/Sricor/yiban.git "index" "crypter|yiban" "utils" "main"
+ql repo https://github.com/Sricor/yiban.git "index" "crypter" "utils|yiban" "main"
 ```
 
 <br></details>

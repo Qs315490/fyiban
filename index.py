@@ -4,8 +4,10 @@
 # @Date: 2022-4-20
 
 """
-cron "0 08 * * *" 易班打卡
+cron 0 08 * * * index.py
+new Env('易班打卡');
 """
+
 import os
 import yiban
 import utils
