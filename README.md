@@ -1,6 +1,5 @@
-<h1 align="center">yiban task submit🔔</h1>
-
-## 适用于易班校本化分应用打卡
+<h2 align="center">yiban task submit🔔</h2>
+<h2 align="center">适用于易班校本化分应用打卡</h2>
 
 ## Basic Usage
 
