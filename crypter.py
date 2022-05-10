@@ -4,12 +4,6 @@
 # @Date: 2021-10-20
 # 易班用到的加密
 
-"""
-解密Str:
-
-aes_decrypt(aes_key, aes_iv, Str)
-
-"""
 
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5, AES
@@ -81,3 +75,11 @@ def aes_pkcs7unpadding(data):
     lengt = len(data)
     unpadding = ord(data[lengt - 1])
     return data[0:lengt-unpadding]
+
+
+if __name__ == '__main__':
+    aes_key = '2knV5VGRTScU7pOq'
+    aes_iv = 'UmNWaNtM0PUdtFCs'
+    data = '' # 加密提交表单
+    decrypt_data = aes_decrypt(aes_key, aes_iv, data)
+    print(decrypt_data)

@@ -9,33 +9,32 @@ class WechatAppPush:
     WechatAppPush decorator
     Push the msg of the decorated function
 
-    Example:
+    Example 1:
     @WechatAppPush(corpid, corpsecret, agentid)
     def func():
         return 'xxx'
-
-    Also:
+    
+    Example 2:
     def func():
         return 'xxx'
     WechatAppPush(corpid, corpsecret, agentid)(func())()
 
-    Also:
+    Example 3:
     WechatAppPush(corpid, corpsecret, agentid)('xxx')()
 
-    Final:
     Then wechat app will push xxx
 
     :param corpid: wechat app corpid
     :param corpsecret: wechat app corpsecret
     :param agentid: wechat app agentid
-    :param touser: (optional) default: @all
-    :param message: (optional) default: wechat push message
+    :param touser: wechat app @ touser (optional, default: @all ) 
+    :param message: wechat push message (optional, default: Wechat push message tset) 
     :return func:
     docs: https://developer.work.weixin.qq.com/document/path/90236
 
     """
 
-    def __init__(self, corpid: str, corpsecret: str, agentid: str, touser='@all', message='Wechat push message') -> None:
+    def __init__(self, corpid: str, corpsecret: str, agentid: str, touser: str = '@all', message: str = 'Wechat push message tset') -> None:
         self._corpid = corpid
         self._corpsecret = corpsecret
         self._agentid = agentid
@@ -98,15 +97,15 @@ class Debug:
         self._func_timer = func_time
         self._level = level
         self._func_info = func_info
+        LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+        DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
+        logging.basicConfig(level=self._level, format=LOG_FORMAT, datefmt=DATE_FORMAT)
 
     def __call__(self, func):
         @self.func_time
         @self.func_info
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-            DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
-            logging.basicConfig(level=self._level, format=LOG_FORMAT, datefmt=DATE_FORMAT)
             value = func(*args, **kwargs)
             return value
         return wrapper
@@ -123,7 +122,7 @@ class Debug:
             # after func
             end_time = time.perf_counter()
             run_time = end_time - start_time
-            print(f"Finished {func.__name__!r} in {run_time:.4f} secs")
+            logging.log(msg=f"Finished {func.__name__!r} in {run_time:.4f} secs", level=self._level)
             return value
         return wrapper
 
@@ -136,10 +135,10 @@ class Debug:
             args_repr = [repr(a) for a in args]
             kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]
             signature = ", ".join(args_repr + kwargs_repr)
-            print(f"Calling {func.__name__}({signature})")
+            logging.log(msg=f"Calling {func.__name__}({signature})", level=self._level)
             # before func
             value = func(*args, **kwargs)
             # after func
-            print(f"{func.__name__!r} returned {value!r}")
+            logging.log(msg=f"{func.__name__!r} returned {value!r}", level=self._level)
             return value
         return wrapper

@@ -1,22 +1,38 @@
-# YibanAuto
-### 适用于易班校本化分应用打卡 🔔
+<h1 align="center">yiban task submit🔔</h1>
+
+## 适用于易班校本化分应用打卡
 
 ## Basic Usage
+
+克隆本仓库
 ```Bash
-git clone git@github.com:Sricor/Yiban.git
+git clone https://github.com/Sricor/yiban.git
+```
+
+安装依赖
+```Bash
 cd yiban
 pip install -r requirements.txt
 ```
-edit index.py
 
-1.修改index.py中USER账号信息
+修改 index.py 中 `config` 配置
 
-2.进行抓包，手动提交一次易班打卡
-
-3.crypter.py解密POST表单中Str
-
-4.修改SUBMIT_DATA中提交表单数据
-
-python index.py
+```Bash
+python3 index.py
+```
 
 
+ <details>
+    <summary>Config 配置项说明</summary>
+    <li>手动抓包提交<br></li>
+    <li>找到Str加密表单<br></li>
+    <li>利用crypter.py解密<br></li>
+    <li>修改index.py config<br></li>
+ </details>
+
+ <details>
+  <summary>Qinglong 配置</summary>
+    ```
+    ql 
+    ```
+</details>
