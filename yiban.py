@@ -99,11 +99,11 @@ class Yiban:
         self.log_msg('Task not found, try to reauth', level=30)
         client_id = '95626fa3080300ea'
         redirect_uri = 'https://f.yiban.cn/iapp7463'
-        self.req(
+        self._req(
             url='https://oauth.yiban.cn/code/html',
             params={'client_id': client_id, 'redirect_uri': redirect_uri}
         )
-        self.req(
+        self._req(
             method='post',
             url='https://oauth.yiban.cn/code/usersure', 
             data={'client_id': client_id, 'redirect_uri': redirect_uri},
@@ -170,7 +170,7 @@ class Yiban:
             for i in task_uncompleted_list:
                 if i['Title'] == task_title:
                     task_data['Extend']['TaskId'] = i['TaskId']
-                    task_data['WFId'] = self.req(
+                    task_data['WFId'] = self._req(
                         url='https://api.uyiban.com/officeTask/client/index/detail', 
                         params={'TaskId': i['TaskId'], 'CSRF': self._csrf}
                     ).json()['data']['WFId']
@@ -190,7 +190,7 @@ class Yiban:
         task_data['Data'] = json.dumps(task_data['Data'], ensure_ascii=False)
         task_data['Extend'] = json.dumps(task_data['Extend'], ensure_ascii=False)
         task_data = self._encrypt_aes(json.dumps(task_data, ensure_ascii=False))
-        resp = self.req(
+        resp = self._req(
             method='post',
             url='https://api.uyiban.com/workFlow/c/my/apply',
             params={'CSRF': self._csrf},

@@ -88,9 +88,10 @@ def submit(name: str, mobile: str, password: str, submit_data: dict, count=0):
             y = yiban.submit(name=name, mobile=mobile, password=password, submit_data=submit_data)
             msg.append(f"{y['name']}: {y['msg']}")
             break
-        except:
+        except Exception as e:
+            print(e)
             count += 1
-            if count > 3: # 超过三次
+            if count == 3: # 超过三次
                 msg.append(f"{mobile}: Error")
 
 
