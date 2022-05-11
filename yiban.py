@@ -199,7 +199,7 @@ class Yiban:
         # print(resp)
         if resp['code'] == 0:
             self._log_msg('Submit succeed')
-            resp['msg'] = '打卡成功'
+            result_msg['msg'] = '打卡成功'
         else:
             # Error
             self._log_msg(resp['msg'])
