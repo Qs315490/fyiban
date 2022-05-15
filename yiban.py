@@ -96,7 +96,7 @@ class Yiban:
 
     def _reauth(self, count) -> None:
         """ Reauth function """
-        self.log_msg('Task not found, try to reauth', level=30)
+        self._log_msg('Task not found, try to reauth', level=30)
         client_id = '95626fa3080300ea'
         redirect_uri = 'https://f.yiban.cn/iapp7463'
         self._req(
