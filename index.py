@@ -73,8 +73,9 @@ env = os.getenv('YIBAN') # 自用 环境变量 base64 url形式获取config
 if env != None:
     config_url = b64decode(env).decode("utf-8")
     resp = requests.get(config_url).json()
-    config= resp
-
+    config = resp
+    logging_level = 50
+        
 
 def submit(name: str, mobile: str, password: str, submit_data: dict, count=0):
     """ 
