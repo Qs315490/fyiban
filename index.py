@@ -67,6 +67,7 @@ config = {
     },
 }
 
+logging_level = logging.INFO
 msg = [] # 消息列表
 env = os.getenv('YIBAN') # 自用 环境变量 base64 url形式获取config
 if env != None:
@@ -95,7 +96,7 @@ def submit(name: str, mobile: str, password: str, submit_data: dict, count=0):
                 msg.append(f"{mobile}: Error")
 
 
-@utils.Debug(level=logging.INFO) # DEBUG
+@utils.Debug(level=logging_level) # DEBUG
 def main_handler():
     msg.append(f"易班打卡: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     threads = [] # 线程池
@@ -111,4 +112,4 @@ def main_handler():
     return return_msg
 
 if __name__ == '__main__':
-    print(main_handler())
+    main_handler()
