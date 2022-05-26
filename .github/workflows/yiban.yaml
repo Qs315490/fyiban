@@ -3,7 +3,7 @@ name: Yiban
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '30 3 * * *'
+    - cron:  '30 18 * * *'
 
 jobs:
   build:
