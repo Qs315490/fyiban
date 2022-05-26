@@ -17,7 +17,6 @@ import requests
 import threading
 from base64 import b64decode
 
-msg = [] # 消息列表
 config = {
     "user": [
         {"name": "xxx", "mobile": "xxx", "password": "xxx"},
@@ -68,7 +67,8 @@ config = {
     },
 }
 
-env = os.getenv('yiban') # 自用 环境变量
+msg = [] # 消息列表
+env = os.getenv('YIBAN') # 自用 环境变量 base64 url形式获取config
 if env != None:
     config_url = b64decode(env).decode("utf-8")
     resp = requests.get(config_url).json()
@@ -97,7 +97,7 @@ def submit(name: str, mobile: str, password: str, submit_data: dict, count=0):
 
 @utils.Debug(level=logging.INFO) # DEBUG
 def main_handler():
-    msg.append(f"易班打卡: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} 🔔")
+    msg.append(f"易班打卡: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     threads = [] # 线程池
     for i in config['user']:
         threads.append(threading.Thread(target=submit, args=(i['name'], i['mobile'], i['password'], config['submit_data'])))

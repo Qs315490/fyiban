@@ -72,7 +72,7 @@ class Yiban:
                 allow_redirects = allow_redirects
             )
         else:
-            self._error('Requests method error')
+            self._error_msg('Requests method error')
 
     def _login(self) -> None:
         """ Login function """
