@@ -97,7 +97,7 @@ def submit(name: str, mobile: str, password: str, submit_data: dict, count=0):
                 msg.append(f"{mobile}: Error")
 
 
-@utils.Debug(level=logging_level) # DEBUG
+@utils.Debug(level=logging_level, func_info=False) # DEBUG
 def main_handler():
     msg.append(f"易班打卡: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     threads = [] # 线程池
@@ -116,4 +116,4 @@ if __name__ == '__main__':
     try:
         main_handler()
     except:
-        raise Exception("Error...")
+        raise Exception("Error! ")
