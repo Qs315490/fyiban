@@ -112,4 +112,7 @@ def main_handler():
     return return_msg
 
 if __name__ == '__main__':
-    main_handler()
+    try:
+        main_handler()
+    except:
+        raise Exception("Error...")
