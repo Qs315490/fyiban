@@ -189,7 +189,7 @@ class HealthSubmit(Base):
             data = {"client_id": client_id, "redirect_uri": redirect_uri})
 
 
-    def _req(self, method:str = "GET", url:str = "", data:dict = {}, params:dict = {}, timeout:int = 10, allow_redirects:bool = True, **kwargs):
+    def _req(self, method:str = "GET", url:str = "", data:dict = {}, params:dict = {}, timeout:int = 60, allow_redirects:bool = True, **kwargs):
         cookies = {"csrf_token": self._csrf}
         headers = {"Origin": "https://c.uyiban.com", "User-Agent": "Yiban", "AppVersion": "5.0"}
         if 'cookies' in kwargs:  cookies.update(kwargs.get("cookies"))
