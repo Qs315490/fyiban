@@ -25,9 +25,9 @@ def main():
             # 提交表单 BEGIN
             "WFId": "",
             "Data": {
-                "9843754e97aad058523524bdb8991bcd": "否", 
-                "72fe9c2c81a48fd0968edbbb3f2c1c42": "36.5", 
-                "769bbfbfb026629f1ddb0294a9c0d257": "湘南学院", 
+                "9843754e97aad058523524bdb8991bcd": "", 
+                "72fe9c2c81a48fd0968edbbb3f2c1c42": "", 
+                "769bbfbfb026629f1ddb0294a9c0d257": "", 
                 "90b5b83950ae456fefebb0f751406e2d": [], 
                 "0242914b8746275c5073ccdb156f9d1d":[],
                 "1bac180dd37455f7c16a36336c0411a8":{}
