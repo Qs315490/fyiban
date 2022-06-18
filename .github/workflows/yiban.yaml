@@ -2,8 +2,8 @@ name: Yiban
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '30 0,18 * * *'
+  # schedule:
+  #   - cron:  '30 0,18 * * *'
 env:
   TZ: Asia/Shanghai
 
