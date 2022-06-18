@@ -5,11 +5,7 @@ config = {
     "Thread": False,
 
     "UserList":[
-        {"name": "郭辰希", "mobile": "15003470517", "password": "1872149749gcx"}, 
-        {"name": "秦明辉", "mobile": "17673420706", "password": "mangzai666.."}, 
-        {"name": "陈均潮", "mobile": "18127580124", "password": "cjc18127580124"}, 
-        {"name": "杨丰豪", "mobile": "18835903765", "password": "hao200104185200"}, 
-        {"name": "曾清泉", "mobile": "17508969621", "password": "wacjxgnps666"}
+        {"name": "", "mobile": "", "password": ""}, 
     ],
 
     "SubmitData": {
