@@ -61,7 +61,7 @@ def main():
         yb = Yiban(i["mobile"], i["password"])
 
         # 健康提交
-        result = yb.helath_submit()
+        result = yb.helath_submit(config["SubmitData"])
 
         # 当前存在其他任务
         result += " 当前存在其他任务："
