@@ -197,7 +197,7 @@ class STask(BaseYiban):
         task_data['Extend']['TaskId'] = task_id
         task_data['Data'] = dumps(task_data['Data'], ensure_ascii=False)
         task_data['Extend'] = dumps(task_data['Extend'], ensure_ascii=False)
-        task_data = self.encrypt_aes(dumps(task_data, ensure_ascii=False))
+        task_data = self.aes_encrypt(dumps(task_data, ensure_ascii=False))
 
         # 提交表单
         response = self.post(
@@ -216,7 +216,7 @@ class STask(BaseYiban):
             raise Exception(f"Submit Task Error {response['msg']}")
 
     @staticmethod
-    def encrypt_aes(data: Any) -> AnyStr:
+    def aes_encrypt(data: Any) -> AnyStr:
         """
         提交表单加密
         :param data: （必须）提交表单数据
@@ -249,7 +249,7 @@ class STask(BaseYiban):
         data = b64decode(b64decode(data))
         cipher = AES.new(aes_key, AES.MODE_CBC, aes_iv)
         decrypted = cipher.decrypt(data)
-        return decrypted.decode('utf-8')
+        return decrypted.decode('Utf-8')
 
 
 """

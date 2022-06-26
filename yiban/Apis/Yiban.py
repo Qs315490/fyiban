@@ -14,7 +14,7 @@ class Yiban(
             password: str,
     ):
         """
-        易班 Api
+        易班 Python API service
         :param mobile:   (必须) 用户账号
         :param password: (必须) 用户密码
         """
