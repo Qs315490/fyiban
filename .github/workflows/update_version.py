@@ -18,7 +18,7 @@ if __name__ == '__main__':
     print(f'最新version是: {version}')
 
     # 读取文件
-    init_py = 'aligo/__init__.py'
+    init_py = 'yiban/__init__.py'
     init = open(init_py, encoding='utf-8').read()
     new_init = re.sub('\n__version__.*\n', f"\n__version__ = '{version}'\n", init)
     open(init_py, 'w', encoding='utf-8').write(new_init)
