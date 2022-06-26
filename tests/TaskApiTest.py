@@ -1,5 +1,9 @@
 import json
+
+import TestConfig
+
 from yiban import Task
+
 task_data = {
     "WFId": "",
     "Data": {
