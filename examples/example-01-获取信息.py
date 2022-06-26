@@ -13,6 +13,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO) # DE
 yb = Yiban("账号", "密码")              # 传入账号密码 实例化 Yiban
 name = yb.get_user_name()               # 获取用户名
 token = yb.get_user_access_token()      # 获取登录密钥
+
 task_list = yb.get_uncompleted_task()   # 获取校本化应用中 未完成的任务
-task_completed_list = yb.get_completed_task()  # 
+task_completed_list = yb.get_completed_task()  # 获取校本化应用中 已完成的任务
 
