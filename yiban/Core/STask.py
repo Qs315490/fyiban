@@ -134,7 +134,7 @@ class STask(BaseYiban):
         else:
             raise Exception(f"Get Completed Tasks Error {response['msg']}")
 
-    def get_task_id(self, task_title) -> AnyStr | None:
+    def get_task_id(self, task_title) -> AnyStr:
         """
         获取未完成任务中的 TaskId （以任务标题形式 ）
         :param task_title: （必须）任务标题
@@ -167,10 +167,11 @@ class STask(BaseYiban):
         else:
             raise Exception(f"Get Task WFId Error {response['msg']}")
 
-    def submit_task(self, data: Dict) -> bool | None:
+    def submit_task(self, data: Dict) -> bool:
         """
         :param data: （必须）任务提交表单
-        :return: bool | None
+        :return: bool Result
+        :return: None 无未打卡任务
         """
         # 任务列表为空 无未完成任务
         if len(self.get_uncompleted_task()) == 0:
