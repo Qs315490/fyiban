@@ -36,7 +36,7 @@ class BaseYiban:
         for i in range(1, 6):
             response = self.session.request(method=method, url=url, params=params, 
                                             data=data, headers=headers, cookies=cookies,
-                                            json=body, allow_redirects=allow_redirects)
+                                            json=body, allow_redirects=allow_redirects, timeout=20)
 
             return response
 
