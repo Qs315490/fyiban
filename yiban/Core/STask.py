@@ -25,7 +25,11 @@ class STask(BaseYiban):
         return {"Origin": "https://c.uyiban.com", "User-Agent": "Yiban", "AppVersion": "5.0"}
 
     def _cookies(self) -> Dict:
-        return {'loginToken': self._access_token, 'csrf_token': self._csrf}
+        return {
+            "yiban_user_token": self._access_token, 
+            'loginToken': self._access_token, 
+            'csrf_token': self._csrf
+        }
 
     def _re_auth(self, verify: str) -> None:
         """
@@ -58,8 +62,12 @@ class STask(BaseYiban):
 
     def _auth(self) -> None:
         """用户认证"""
+        "https://f.yiban.cn/iapp/index"
+        "https://f.yiban.cn/iframe/index"
+
         response = self.get(
-            url='https://f.yiban.cn/iapp/index',
+            # 认证接口 暂时替换
+            url='https://f.yiban.cn/iframe/index',
             params={'act': 'iapp7463'},
             allow_redirects=False,
             headers=self._headers(),

@@ -3,11 +3,13 @@ from yiban.Core import Login
 
 class User:
     def __init__(self, mobile: str, password: str):
-        self.user = Login().get_user_info(mobile=mobile, password=password)
+        self.__mobile = mobile
+        self.__password = password
+        self.user = Login()
 
     def get_user_access_token(self) -> str:
         """获取用户登录密钥"""
-        return self.user['access_token']
+        return self.user.get_user_access_token(self.__mobile, self.__password)
 
     def get_user_name(self) -> str:
         """获取用户名"""

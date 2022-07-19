@@ -47,21 +47,35 @@ class Login(BaseYiban):
 
     def get_user_info(self, mobile: str, password: str) -> Dict:
         """ Login function """
+        # 暂时弃用
+        # response = self.post(
+        #     url="https://mobile.yiban.cn/api/v4/passport/login",
+        #     headers={"User-Agent": "Yiban", "AppVersion": "5.0"},
+        #     data={
+        #         'ct': '2',
+        #         'identify': '1',
+        #         'mobile': mobile,
+        #         'password': self.encrypt_rsa(password)}
+        # ).json()
+
+        # self._log(f"Login Response {response}", 10)
+
+        # if response['response'] == 100:
+        #     return response['data']
+
+    def get_user_access_token(self, mobile: str, password: str) -> str:
         response = self.post(
-            url="https://mobile.yiban.cn/api/v4/passport/login",
+            url="https://www.yiban.cn/login/doLoginAjax",
             headers={"User-Agent": "Yiban", "AppVersion": "5.0"},
             data={
-                'ct': '2',
-                'identify': '1',
-                'mobile': mobile,
-                'password': self.encrypt_rsa(password)}
-        ).json()
-
+                'account': mobile,
+                'password': password
+            }
+        )
         self._log(f"Login Response {response}", 10)
-
-        if response['response'] == 100:
-            return response['data']
-
+        access_token = response.cookies.get_dict()['yiban_user_token']
+        return access_token
+        
     @staticmethod
     def encrypt_rsa(data: str) -> AnyStr:
         """
