@@ -73,8 +73,12 @@ class Login(BaseYiban):
             }
         )
         self._log(f"Login Response {response}", 10)
-        access_token = response.cookies.get_dict()['yiban_user_token']
-        return access_token
+        try:
+            access_token = response.cookies.get_dict()['yiban_user_token']
+            return access_token
+        except Exception as e:
+            print(f"Login Error 登录失败：{e} ")
+        
         
     @staticmethod
     def encrypt_rsa(data: str) -> AnyStr:

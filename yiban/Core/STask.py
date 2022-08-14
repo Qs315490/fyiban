@@ -15,6 +15,7 @@ class STask(BaseYiban):
         super().__init__()
         self._csrf = '00000'
         self._access_token = access_token
+        self._stask_user_info = {}
         try:
             self._auth()
         except Exception as e:
@@ -84,6 +85,8 @@ class STask(BaseYiban):
             cookies=self._cookies()
         ).json()
         self._log(f"Auth Response {response}", 10)
+
+        self._stask_user_info = response['data']
 
         if response['code'] == 0:
             return None

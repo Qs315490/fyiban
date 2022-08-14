@@ -19,9 +19,11 @@ from yiban import Yiban
 
 if __name__ == '__main__':
     yb = Yiban("手机号", "密码")
-    user   = yb.get_user_name()         # 获取用户信息
-    token  = yb.get_access_token()      # 获取登录密钥
-    uftask = yb.get_uncompleted_task()  # 获取校本化未完成任务
+    user   = yb.get_user_name()         # 获取用户信息    
+    token  = yb.get_user_access_token() # 获取登录密钥
+    s_name = yb.get_user_school_name()  # 院校名称
+    task   = yb.get_completed_task()    # 校本化完成任务
+    u_task = yb.get_uncompleted_task()  # 校本化未完成任务
     ...
 
 ```

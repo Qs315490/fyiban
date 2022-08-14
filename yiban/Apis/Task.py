@@ -33,3 +33,11 @@ class Task:
         :return:
         """
         return self.task.submit_task(task_data)
+
+    def get_user_name(self) -> str:
+        """获取用户名"""
+        return self.task._stask_user_info['PersonName']
+
+    def get_user_school_name(self) -> str:
+        """获取用户学校名称"""
+        return self.task._stask_user_info['UniversityName']
