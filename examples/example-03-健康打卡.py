@@ -41,5 +41,5 @@ task_data = {
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO) # DEBUG
 
 yb = Yiban("账号", "密码")
-yb.submit_task(task_data) # 健康打卡提交 返回 Bool
+yb.submit_task_feedback(task_data) # 校本化打卡
 

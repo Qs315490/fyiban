@@ -20,7 +20,3 @@ class Yiban(
         """
         super().__init__(mobile=mobile, password=password)  # init User
         super(User, self).__init__(access_token=self.get_user_access_token())  # init Task
-
-
-
-

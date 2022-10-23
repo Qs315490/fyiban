@@ -1,17 +1,10 @@
-from logging import log
-from typing import Dict
-
 import requests
 
+from typing import Dict
 
-class BaseYiban:
+class BaseReq:
     def __init__(self):
         self.session = requests.session()
-
-    @staticmethod
-    def _log(msg: str = None, level: int = 20) -> None:
-        msg = f"Yiban {msg}"
-        log(msg=msg, level=level)
 
     def request(
             self, 
@@ -41,7 +34,6 @@ class BaseYiban:
             return response
 
         # 重试五次失败
-        self._log(f"Request Error {url}")
         raise Exception("Request Error")
         
     def get(self, url: str, params: dict = None, headers: dict = None,

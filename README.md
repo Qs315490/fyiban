@@ -18,12 +18,12 @@ pip install --upgrade fyiban
 from yiban import Yiban
 
 if __name__ == '__main__':
-    yb = Yiban("手机号", "密码")
-    user   = yb.get_user_name()         # 获取用户信息    
-    token  = yb.get_user_access_token() # 获取登录密钥
-    s_name = yb.get_user_school_name()  # 院校名称
-    task   = yb.get_completed_task()    # 校本化完成任务
-    u_task = yb.get_uncompleted_task()  # 校本化未完成任务
+    yb = Yiban("手机号", "密码")  
+    yb.get_user_name()         # 用户信息
+    yb.get_user_access_token() # 登录密钥
+    yb.get_user_school_name()  # 院校名称
+    yb.get_task_feedback_uncompleted_task()  # 校本化 任务反馈入口 完成任务
+    yb.get_task_feedback_uncompleted_task()  # 校本化 任务反馈入口 未完成任务
     ...
 
 ```
@@ -37,10 +37,11 @@ from yiban import Yiban
 if __name__ == '__main__':
     task_data = {
         "Data":{...},
-        "Extend": {...}
+        "Extend": {...},
+        "...":"..."
     }
     yb = Yiban("手机号", "密码")
-    yb.submit_task(task_data)
+    yb.submit...(task_data)
     ...
 ```
 
@@ -56,9 +57,12 @@ yiban
 │   ├── User.py
 │   └── Yiban.py
 └── Core
-    ├── BaseYiban.py
+    ├── BaseReq.py
     ├── Login.py
-    └── STask.py
+    ├── EpidemicPrevention.py
+    ├── SchoolBased.py
+    ├── SchoolBasedAuth.py
+    └── TaskFeedback.py
 ```
 
 
@@ -68,3 +72,4 @@ yiban
 
 ## 更新日志
 > 2022-7-19 移动端登录接口问题，暂时替换
+> 2022-10-23 新增校本化疫情防控打卡入口

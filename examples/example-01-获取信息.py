@@ -23,9 +23,9 @@ print(name)
 school_name  = yb.get_user_school_name() # 院校名称
 print(school_name)
 
-uncompleted_task = yb.get_uncompleted_task() # 获取校本化应用中 未完成的任务
+uncompleted_task = yb.get_task_feedback_uncompleted_task() # 获取校本化 任务反馈应用中 未完成的任务
 print(uncompleted_task)
 
-task = yb.get_completed_task() # 获取校本化应用中 已完成的任务
+task = yb.get_task_feedback_completed_task() # 获取校本化 任务反馈应用中 已完成的任务
 print(task)
 
