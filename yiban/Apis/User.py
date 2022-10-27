@@ -1,5 +1,11 @@
-from yiban.Core import Login
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Author: Sricor
+# @Date: 2022-10-25
 
+""" User Class """
+
+from yiban.Core import Login
 
 class User:
     def __init__(self, mobile: str, password: str):

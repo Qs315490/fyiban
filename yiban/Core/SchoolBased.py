@@ -1,4 +1,10 @@
-""" 校本化分应用 认证"""
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Author: Sricor
+# @Date: 2022-10-25
+
+""" SchoolBased Class """
+
 from logging import log
 from Crypto.Cipher import AES
 from base64 import b64encode, b64decode

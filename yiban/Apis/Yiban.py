@@ -1,4 +1,9 @@
-"""Yiban class"""
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Author: Sricor
+# @Date: 2022-10-25
+
+""" Yiban Class """
 
 from yiban.Apis import User
 from yiban.Apis import Task
@@ -19,4 +24,8 @@ class Yiban(
         :param password: (必须) 用户密码
         """
         super().__init__(mobile=mobile, password=password)  # init User
-        super(User, self).__init__(access_token=self.get_user_access_token())  # init Task
+        
+        try:
+            super(User, self).__init__(access_token=self.get_user_access_token())  # init Task
+        except:
+            pass

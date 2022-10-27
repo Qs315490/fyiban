@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Author: Sricor
+# @Date: 2022-10-25
+
+""" Login Class """
+
 from base64 import b64encode
 from typing import Dict, AnyStr
 
@@ -6,9 +13,9 @@ from Crypto.Cipher import PKCS1_v1_5
 
 from yiban.Core import BaseReq
 
-class Login(BaseReq):
+class Login:
     def __init__(self):
-        super().__init__()
+        self.req = BaseReq()
 
     def get_user_info(self, mobile: str, password: str) -> Dict:
         """ Login function """
@@ -29,7 +36,7 @@ class Login(BaseReq):
         #     return response['data']
 
     def get_user_access_token(self, mobile: str, password: str) -> str:
-        response = self.post(
+        response = self.req.post(
             url="https://www.yiban.cn/login/doLoginAjax",
             headers={"User-Agent": "Yiban", "AppVersion": "5.0"},
             data={

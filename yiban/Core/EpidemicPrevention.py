@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Author: Sricor
+# @Date: 2022-10-25
+
+""" EpidemicPrevention Class """
+
 from json import dumps
 from typing import Dict, List
 

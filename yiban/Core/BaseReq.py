@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Author: Sricor
+# @Date: 2022-10-25
+
+""" BaseReq Class """
+
 import requests
 
 from typing import Dict

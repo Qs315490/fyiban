@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Author: Sricor
+# @Date: 2022-10-25
+
+""" TaskFeedback Class """
+
 from json import dumps
 from time import strftime, localtime
 from datetime import datetime, timedelta
@@ -205,3 +212,4 @@ url = 'https://api.uyiban.com/workFlow/c/my/apply'
     'data': ''
 }
 """
+

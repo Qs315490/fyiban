@@ -1,4 +1,10 @@
-""" school based auth """
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Author: Sricor
+# @Date: 2022-10-25
+
+""" SchoolBasedAuth Class """
+
 from re import findall
 from requests.utils import add_dict_to_cookiejar
 
@@ -9,6 +15,7 @@ from yiban.Core import SchoolBased
 class SchoolBasedAuth:
     def __init__(self, access_token: str) -> None :
         self.req = BaseReq()
+        self.user_info = {}
 
         # Set auth requests headers and cookies
         self.req.session.headers.update(SchoolBased.headers())
@@ -69,7 +76,42 @@ class SchoolBasedAuth:
 
         # if auth done return requests class else raise
         if response['code'] == 0:
-            self.user_info = response['data']
             return self.req
         else:
             raise Exception(f"Auth Error {response['msg']}")
+
+
+"""
+{
+'code': 0, 
+'msg': '', 
+'data': {
+    'UniversityName': '', 
+    'UniversityId': '', 
+    'PersonId': '', 
+    'PersonName': '', 
+    'State': 1, 
+    'PersonType': 'student', 
+    'UniversityIcon': '', 
+    'Container': 'StudentDefault', 
+    'HomeTheme': 'HomeDefault', 
+    'CustomApps': {
+        'up': [], 
+        'down': []}, 
+        'Group': [], 
+        'Apps': [
+            {
+                'Id': '', 
+                'ServiceId': '', 
+                'AppIcon': '', 
+                'AppUrl': '', 
+                'AppRuleUrl': '', 
+                'AuthCode': '', 
+                'AppName': ''
+            }
+        ], 
+        'WxState': 0, 
+        'DingDingState': 0
+    }
+}
+"""
