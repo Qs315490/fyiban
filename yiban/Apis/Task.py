@@ -14,7 +14,6 @@ from yiban.Core import EpidemicPrevention
 class Task:
     def __init__(self, access_token):
         req = SchoolBasedAuth(access_token)._auth()
-        print(SchoolBasedAuth(access_token).user_info)
 
         self.task_feedback = TaskFeedback(req)             # 任务反馈
         self.epidemic_prevention = EpidemicPrevention(req) # 疫情防控
@@ -37,6 +36,8 @@ class Task:
     def submit_epidemic_prevention(self, title, data):
         return self.epidemic_prevention.submit_task(title, data)
 
+    def submit_sign_feedback(self, data):
+        return self.task_feedback.submit_sign(data)
 
     @staticmethod
     def task_aes_encrypt(data):

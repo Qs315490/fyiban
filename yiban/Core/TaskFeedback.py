@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# @Author: Sricor
-# @Date: 2022-10-25
+# @Author: Sricor, Moozae
+# @Date: 2022-10-28
 
 """ TaskFeedback Class """
 
 from json import dumps
-from time import strftime, localtime
+from time import strftime, localtime, time
 from datetime import datetime, timedelta
 from typing import Dict, List, AnyStr
 
@@ -47,6 +47,20 @@ class TaskFeedback:
             return response['data']
         else:
             raise Exception(f"Get School Based Completed Tasks Error {response['msg']}")
+
+    def get_sign_task(self) -> Dict:
+        """获取晚点签到任务"""
+        response = self.req.get(
+            url='https://api.uyiban.com/nightAttendance/student/index/signPosition',
+            params={
+                'CSRF': SchoolBased.csrf()},
+            headers=SchoolBased.headers(),
+        ).json()
+
+        if response['code'] == 0:
+            return response['data']['Range']
+        else:
+            raise Exception(f"Get Night Attendance Sign Tasks Error {response['msg']}")
 
     def get_task_id(self, task_title) -> AnyStr:
         """
@@ -118,6 +132,36 @@ class TaskFeedback:
             return response['data']
         else:
             raise Exception(f"Submit Task Error {response['msg']}")
+
+    def submit_sign(self, data: str) -> AnyStr:
+        """
+        提交晚点签到任务
+        :param data: （必须）签到提交表单
+        :return: AnyStr Result
+        """
+        # 到达签到时间 开始签到
+        time_range = self.get_sign_task()
+        if time_range['StartTime'] < time() < time_range['EndTime']:
+            push_data = {
+                "Code": "",
+                "PhoneModel": "",
+                "SignInfo": data,
+                "OutState": "1"
+            }
+            response = self.req.post(
+                url='https://api.uyiban.com/nightAttendance/student/index/signIn',
+                params={'CSRF': SchoolBased.csrf()},
+                data=push_data,
+            ).json()
+            print(response)
+            if response['code'] == 0 and response['data'] is True:
+                return '签到成功'
+            else:
+                return response['msg']
+        # 未到签到时间 无需签到
+        else:
+            return '签到失败 未到签到时间'
+
 
 """
 任务信息接口
@@ -204,6 +248,51 @@ url = 'https://api.uyiban.com/officeTask/client/index/completedList'
 """
 
 """
+获取晚点签到任务接口
+url = 'https://api.uyiban.com/nightAttendance/student/index/signPosition'
+{
+    'code': 0, 
+    'msg': '', 
+    'data': {
+        'State': 1, 
+        'Msg': '', 
+        'OutState': '', 
+        'Remark': '', 
+        'FileUrl': '', 
+        'Type': '', 
+        'Position': [
+            {
+                'Id': '', 
+                'UniversityId': '', 
+                'Campus': '', 
+                'BuildingId': , 
+                'Type': '', 
+                'Title': '', 
+                'Address': '', 
+                'LngLat': '', 
+                'Range': 0, 
+                'MapType': 2, 
+                'Points': [
+
+                ], 
+                'AddressName': '', 
+                'CreateTime': 
+            }
+        ], 
+        'Range': {
+            'StartTime': , 
+            'EndTime': , 
+            'SignDay': 1, 
+            'RelatType': '1', 
+            'RelatTimeType': '2'
+        }, 
+        'IsNeedPhoto': 2, 
+        'AttachmentFileName': ''
+    }
+}
+"""
+
+"""
 提交表单接口信息
 url = 'https://api.uyiban.com/workFlow/c/my/apply'
 {
@@ -213,3 +302,12 @@ url = 'https://api.uyiban.com/workFlow/c/my/apply'
 }
 """
 
+"""
+提交签到接口信息
+url='https://api.uyiban.com/nightAttendance/student/index/signIn'
+{
+    'code': 0, 
+    'msg': '', 
+    'data': ''
+}
+"""
