@@ -21,8 +21,8 @@ class SchoolBased:
         return { "Origin": "https://c.uyiban.com", "User-Agent": "Yiban", "AppVersion": "5.0" }
 
     @staticmethod
-    def cookies(access_token) -> Dict: 
-        return { "yiban_user_token": access_token, "loginToken": access_token, "csrf_token": "00000" }
+    def cookies() -> Dict: 
+        return {  "csrf_token": "00000" }
 
     @staticmethod
     def _log(msg: str = None, level: int = 20) -> None:
