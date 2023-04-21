@@ -12,8 +12,8 @@ from yiban.Core import SchoolBasedAuth
 from yiban.Core import EpidemicPrevention
 
 class Task:
-    def __init__(self, access_token):
-        req = SchoolBasedAuth(access_token)._auth()
+    def __init__(self, mobile: str, password: str):
+        req = SchoolBasedAuth(mobile=mobile, password=password)._auth()
 
         self.task_feedback = TaskFeedback(req)             # 任务反馈
         self.epidemic_prevention = EpidemicPrevention(req) # 疫情防控
