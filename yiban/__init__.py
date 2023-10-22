@@ -3,8 +3,8 @@ from .Apis import *
 
 __title__ = 'yiban'
 __description__ = 'Apis lib for yiban.'
-__url__ = 'https://github.com/sricor/yiban'
-__version__ = '1.0.7'
-__author__ = 'joSricor'
-__author_email__ = 'josricor@outlook.com'
-__ide__ = 'PyCharm - https://www.jetbrains.com/pycharm/'
+__url__ = 'https://github.com/Qs315490/fyiban'
+__version__ = '1.0.8'
+__author__ = 'Qs315490'
+__author_email__ = 'qs315490@qq.com'
+__ide__ = 'VS Code'

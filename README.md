@@ -6,10 +6,9 @@
 - 🔧 可适配不同分应用
 
 
-[![python version](https://img.shields.io/pypi/pyversions/fyiban)](https://pypi.org/project/fyiban/)
-
+![python version](https://img.shields.io/pypi/pyversions/fyiban)
 ```bash
-pip install --upgrade fyiban
+pip install --upgrade git+https://github.com/Qs315490/fyiban
 ```
 
 ## 快速入门
@@ -29,7 +28,7 @@ if __name__ == '__main__':
 
 ```
 ## 示例 
-- 校本化健康打卡提交示例 [SubmitTask](https://github.com/Sricor/yiban/blob/main/examples/example-03-%E5%81%A5%E5%BA%B7%E6%89%93%E5%8D%A1.py)  
+- 校本化健康打卡提交示例 [SubmitTask](https://github.com/Qs315490/fyiban/blob/main/examples/example-03-%E5%81%A5%E5%BA%B7%E6%89%93%E5%8D%A1.py)  
 
 ```python
 """校本化健康打卡"""
@@ -46,7 +45,7 @@ if __name__ == '__main__':
     ...
 ```
 
-- 更多示例 [Examples](https://github.com/sricor/yiban/tree/main/examples)
+- 更多示例 [Examples](https://github.com/Qs35490/fyiban/tree/main/examples)
 
 
 
@@ -72,6 +71,7 @@ yiban
 > 此项目仅供学习交流，为配合防疫工作，请确保每日体温正常再进行上报。  
 
 ## 更新日志
+> 2023-10-22 使用网页RSA密钥进行登录密码加密，暂时有效
 > 2022-7-19 移动端登录接口问题，暂时替换  
 > 2022-10-23 新增校本化疫情防控打卡入口  
 > 2022-10-28 新增校本化晚点签到入口
