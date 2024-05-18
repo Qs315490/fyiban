@@ -24,8 +24,8 @@ class Yiban(
         :param password: (必须) 用户密码
         """
         super().__init__(mobile=mobile, password=password)  # init User
-        
-        try:
-            super(User, self).__init__(mobile=mobile, password=password)  # init Task
-        except:
-            pass
+        super(User, self).__init__(mobile=mobile, password=password)  # init Task
+        # try:
+        #     super(User, self).__init__(mobile=mobile, password=password)  # init Task
+        # except:
+        #     pass
