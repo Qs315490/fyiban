@@ -15,8 +15,6 @@ from base64 import b64encode
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5
 
-from typing import AnyStr
-
 
 class SchoolBasedAuth:
     def __init__(self, mobile: str, password: str) -> None:
@@ -98,7 +96,7 @@ e8m5cv5vPGY75uVrGqALQ6Xm961PPc5cJ1q7tmEZMj+z5HE7tgAdhiPI6acKgrAv
 
         login_res = self.req.post(
             url="https://m.yiban.cn/api/v4/passport/login",
-            headers={"AppVersion": "5.1.0"},
+            headers={"AppVersion": "5.1.2"},
             data=login_data,
         ).json()
 
@@ -115,7 +113,9 @@ e8m5cv5vPGY75uVrGqALQ6Xm961PPc5cJ1q7tmEZMj+z5HE7tgAdhiPI6acKgrAv
             allow_redirects=False,
         )
 
-        verify = findall(r"verify_request=(.*?)&", response.headers.get("Location"))[0]
+        location = response.headers.get("Location")
+        assert location is not None
+        verify = findall(r"verify_request=(.*?)&", location)[0]
 
         # re auth
         self._re_auth(verify)
@@ -128,23 +128,23 @@ e8m5cv5vPGY75uVrGqALQ6Xm961PPc5cJ1q7tmEZMj+z5HE7tgAdhiPI6acKgrAv
         # if auth done return requests class else raise
         if response["code"] == 0:
             self.user_info = response["data"]
-            return self.req
+            return
         else:
             raise Exception(f"Auth Error {response['msg']}")
 
-    def _get_name(self) -> AnyStr:
+    def _get_name(self) -> str:
         return self.user_info["PersonName"]
 
     @staticmethod
-    def encrypt_rsa(data: str, rsa_key: str) -> AnyStr:
+    def encrypt_rsa(data: str, rsa_key: str) -> str:
         """
         登录密码加密
         :param data: （必须）待加密密码
         :return: Any
         """
-        data = bytes(data, encoding="utf8")
+        data_bytes = bytes(data, encoding="utf8")
         encrypt = PKCS1_v1_5.new(RSA.importKey(rsa_key))
-        sencrypt = b64encode(encrypt.encrypt(data))
+        sencrypt = b64encode(encrypt.encrypt(data_bytes))
         return sencrypt.decode("utf-8")
 
 

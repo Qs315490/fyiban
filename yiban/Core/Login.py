@@ -6,7 +6,6 @@
 """ Login Class """
 
 from base64 import b64encode
-from typing import Dict, AnyStr
 
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5
@@ -21,11 +20,11 @@ class Login:
         self.req = BaseReq()
         self.access_token = ""
 
-    def get_user_info(self, mobile: str, password: str) -> Dict:
+    def get_user_info(self, mobile: str, password: str) -> dict:
         """Login function"""
         response = self.req.post(
             url="https://m.yiban.cn/api/v4/passport/login",
-            headers={"User-Agent": "Yiban", "AppVersion": "5.1.0"},
+            headers={"User-Agent": "Yiban", "AppVersion": "5.1.2"},
             data={
                 "ct": "2",
                 "identify": "1",
@@ -40,7 +39,7 @@ class Login:
             self.access_token = response["data"]["access_token"]
             self.req.session.cookies.set("loginToken", self.access_token)
             return response["data"]["user"]
-        raise Exception(f"登录失败：{response['msg']}")
+        raise Exception(f"登录失败：{response['message']}")
 
     def get_user_access_token(self, mobile: str, password: str) -> str:
         # response = self.req.post(
@@ -58,7 +57,7 @@ class Login:
         return self.access_token
 
     @staticmethod
-    def encrypt_rsa(data: str) -> AnyStr:
+    def encrypt_rsa(data: str) -> str:
         """
         登录密码加密
         :param data: （必须）待加密密码
@@ -79,9 +78,9 @@ e8m5cv5vPGY75uVrGqALQ6Xm961PPc5cJ1q7tmEZMj+z5HE7tgAdhiPI6acKgrAv
 +1k4N0OVqKamMS+PVpD05hUCAwEAAQ==
 -----END PUBLIC KEY-----
             """
-        data = bytes(data, encoding="utf8")
+        data_bytes = bytes(data, encoding="utf8")
         encrypt = PKCS1_v1_5.new(RSA.importKey(rsa_key))
-        sencrypt = b64encode(encrypt.encrypt(data))
+        sencrypt = b64encode(encrypt.encrypt(data_bytes))
         return sencrypt.decode("utf-8")
 
 

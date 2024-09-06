@@ -6,7 +6,6 @@
 """ EpidemicPrevention Class """
 
 from json import dumps
-from typing import Dict, List
 
 from yiban.Core import SchoolBased
 from yiban.Core.BaseReq import BaseReq
@@ -15,13 +14,14 @@ class EpidemicPrevention:
     def __init__(self, req: BaseReq):
         self.req = req
 
-    def get_uncompleted_task(self) -> List[Dict]:
-        response = self.req.get(
+    def get_uncompleted_task(self) -> list[dict]:
+        response:dict = self.req.get(
             url="https://api.uyiban.com/epidemicPrevention/client/index/notFinishWork",
             params={"CSRF": SchoolBased.csrf()},
         ).json()
         if response["code"] == 0:
-            return response["data"]
+            data:list[dict] = response["data"]
+            return data
 
     def get_completed_task(self, page=1) -> None:
         response = self.req.get(
@@ -42,13 +42,13 @@ class EpidemicPrevention:
             params={"WFId": wfid, "CSRF": SchoolBased.csrf()},
         ).json()
 
-    def submit_task(self, title, data: Dict) -> int:
+    def submit_task(self, title, data: dict) -> int:
         task_title = title
         task_data = data.copy()
         tasks = self.get_uncompleted_task()
 
         if len(tasks) == 0:
-            return None
+            return 0
 
         for i in tasks:
             if task_title == i["Title"]:
@@ -73,6 +73,6 @@ class EpidemicPrevention:
                 ).json()
 
                 if response["code"] == 0:
-                    return True
+                    return 0
                 else:
                     raise Exception(f"{response['msg']}")
