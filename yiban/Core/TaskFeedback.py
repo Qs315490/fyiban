@@ -8,7 +8,7 @@
 from json import dumps
 from time import strftime, localtime, time
 from datetime import datetime, timedelta
-from typing import Dict, List, AnyStr
+from logging import log
 
 from yiban.Core import SchoolBased
 from yiban.Core.BaseReq import BaseReq
@@ -18,7 +18,7 @@ class TaskFeedback:
     def __init__(self, req: BaseReq):
         self.req = req
 
-    def get_uncompleted_task(self) -> List[Dict]:
+    def get_uncompleted_task(self) -> list[dict]:
         """获取未完成任务"""
         response = self.req.get(
             url="https://api.uyiban.com/officeTask/client/index/uncompletedList",
@@ -36,7 +36,7 @@ class TaskFeedback:
         else:
             raise Exception(f"Get Uncompleted Tasks Error {response['msg']}")
 
-    def get_completed_task(self) -> List[Dict]:
+    def get_completed_task(self) -> list[dict]:
         """获取已完成任务"""
         response = self.req.get(
             url="https://api.uyiban.com/officeTask/client/index/completedList",
@@ -55,7 +55,7 @@ class TaskFeedback:
         else:
             raise Exception(f"Get School Based Completed Tasks Error {response['msg']}")
 
-    def get_sign_task(self) -> Dict:
+    def get_sign_task(self) -> dict:
         """获取晚点签到任务"""
         response = self.req.get(
             url="https://api.uyiban.com/nightAttendance/student/index/signPosition",
@@ -68,7 +68,7 @@ class TaskFeedback:
         else:
             raise Exception(f"Get Night Attendance Sign Tasks Error {response['msg']}")
 
-    def get_task_id(self, task_title) -> AnyStr:
+    def get_task_id(self, task_title) -> str | None:
         """
         获取未完成任务中的 TaskId （以任务标题形式）
         :param task_title: （必须）任务标题
@@ -81,25 +81,25 @@ class TaskFeedback:
         # 未找到任务
         return None
 
-    def get_task_wf_id(self, task_id) -> AnyStr:
+    def get_task_wf_id(self, task_id) -> str:
         """
         获取任务 WFId
         :param task_id: （必须）任务ID
-        :return: AnyStr | None
+        :return: str | None
         """
         response = self.req.get(
             url="https://api.uyiban.com/officeTask/client/index/detail",
             params={"TaskId": task_id, "CSRF": SchoolBased.csrf()},
         ).json()
 
-        self._log(f"Get Task WFId Response {response}", 10)
+        log(10, f"Get Task WFId Response {response}")
 
         if response["code"] == 0:
             return response["data"]["WFId"]
         else:
             raise Exception(f"Get Task WFId Error {response['msg']}")
 
-    def submit_task(self, data: Dict) -> bool:
+    def submit_task(self, data: dict) -> bool | None:
         """
         :param data: （必须）任务提交表单
         :return: Bool Result
@@ -140,11 +140,11 @@ class TaskFeedback:
         else:
             raise Exception(f"Submit Task Error {response['msg']}")
 
-    def submit_sign(self, data: str) -> AnyStr:
+    def submit_sign(self, data: str) -> str:
         """
         提交晚点签到任务
         :param data: （必须）签到提交表单
-        :return: AnyStr Result
+        :return: str Result
         """
         # 到达签到时间 开始签到
         time_range = self.get_sign_task()

@@ -14,18 +14,18 @@ jshost = "https://castatic.fengkongcloud.cn/"
 class CryptoJS:
     @staticmethod
     def DESEncrypt(key: str, data: str):
-        key = key.encode("utf-8")
-        data = pad(data.encode("utf-8"), DES.block_size)
-        chipher = DES.new(key, DES.MODE_ECB)
-        back = chipher.encrypt(data)
+        key_bytes = key.encode("utf-8")
+        data_bytes = pad(data.encode("utf-8"), DES.block_size)
+        chipher = DES.new(key_bytes, DES.MODE_ECB)
+        back = chipher.encrypt(data_bytes)
         return back.hex()
 
     @staticmethod
     def DESDecrypt(key: str, data: str):
-        key = key.encode("utf-8")
-        data = bytes.fromhex(data)
-        cipher = DES.new(key, DES.MODE_ECB)
-        decrypted = cipher.decrypt(data)
+        key_bytes = key.encode("utf-8")
+        data_bytes = bytes.fromhex(data)
+        cipher = DES.new(key_bytes, DES.MODE_ECB)
+        decrypted = cipher.decrypt(data_bytes)
         # return unpad(decrypted, DES.block_size).decode("utf-8")
         return decrypted.decode("utf-8")
 
@@ -133,8 +133,8 @@ class SMCaptcha:
         base_data = {}
         time_now = round(time() * 1000)
         for i in data:
-            i[0] = i[0] / 300
-            i[1] = i[1] / 150
+            i[0] = int(i[0] / 300)
+            i[1] = int(i[1] / 150)
             i.append(time_now)
             time_now += randint(100, 500)
         base_data["museData"] = data

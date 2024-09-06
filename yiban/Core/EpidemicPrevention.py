@@ -14,7 +14,7 @@ class EpidemicPrevention:
     def __init__(self, req: BaseReq):
         self.req = req
 
-    def get_uncompleted_task(self) -> list[dict]:
+    def get_uncompleted_task(self) -> list[dict]|None:
         response:dict = self.req.get(
             url="https://api.uyiban.com/epidemicPrevention/client/index/notFinishWork",
             params={"CSRF": SchoolBased.csrf()},
@@ -42,13 +42,16 @@ class EpidemicPrevention:
             params={"WFId": wfid, "CSRF": SchoolBased.csrf()},
         ).json()
 
-    def submit_task(self, title, data: dict) -> int:
+    def submit_task(self, title, data: dict) -> None:
         task_title = title
         task_data = data.copy()
         tasks = self.get_uncompleted_task()
 
+        if tasks is None:
+            print("无法获取未完成的任务")
+            return
         if len(tasks) == 0:
-            return 0
+            return
 
         for i in tasks:
             if task_title == i["Title"]:
@@ -73,6 +76,6 @@ class EpidemicPrevention:
                 ).json()
 
                 if response["code"] == 0:
-                    return 0
+                    return
                 else:
                     raise Exception(f"{response['msg']}")

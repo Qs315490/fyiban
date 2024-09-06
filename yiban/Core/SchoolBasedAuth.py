@@ -47,7 +47,7 @@ class SchoolBasedAuth:
             data={"client_id": client_id, "redirect_uri": redirect_uri},
         )
 
-    def _auth(self) -> None:
+    def _auth(self) -> BaseReq:
         "https://f.yiban.cn/iapp/index"
         "https://f.yiban.cn/iframe/index"
 
@@ -128,7 +128,7 @@ e8m5cv5vPGY75uVrGqALQ6Xm961PPc5cJ1q7tmEZMj+z5HE7tgAdhiPI6acKgrAv
         # if auth done return requests class else raise
         if response["code"] == 0:
             self.user_info = response["data"]
-            return
+            return self.req
         else:
             raise Exception(f"Auth Error {response['msg']}")
 
